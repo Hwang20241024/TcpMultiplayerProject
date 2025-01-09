@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package main;
+
+// 초기화 패킷 구조
+message InitialPacket {
+    string deviceId = 1;
+    int64 timestamp = 2;
+
+}
+
+// 최초접속 패킷 구조
+message FirstConnectionCheck {
+    int64 timestamp = 1;
+}
+

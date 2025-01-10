@@ -1,4 +1,3 @@
-import { addSocket } from '../../classes/managers/socket.manager.js';
 import { onEnd } from './onEnd.js';
 import { onError } from './onError.js';
 import { onData } from './onData.js';
@@ -13,6 +12,4 @@ export const onConnection = (socket) => {
   socket.on('end', onEnd(socket));
   socket.on('error', onError(socket));
 
-  // 연결된 소켓을 관리 모듈에 추가
-  addSocket(socket);
 };

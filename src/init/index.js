@@ -1,9 +1,21 @@
 // 서버 초기화 작업
+import { testAllConnections } from '../utils/db/testConnection.js';
+import pools from '../db/mysql/mysql.database.js';
 import { loadProtos } from './loadProtos.js';
+import  RedisManager  from '../db/redis/redisManager.js'
+import UserManager from '../classes/managers/user.manager.js';
 
 const initServer = async () => {
   try {
     await loadProtos();
+    await testAllConnections(pools);
+
+    // Redis 매니저 초기화.
+    await RedisManager.getInstance().deleteAllData();
+    await RedisManager.getInstance().getAllDataFromAllKeys();
+    
+    // 유저 매니저 초기화.
+    UserManager.getInstance();
 
     // 다음 작업
   } catch (e) {

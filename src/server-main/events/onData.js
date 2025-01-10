@@ -7,7 +7,7 @@ import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
 import { handleError } from '../../utils/error/errorHandler.js';
 import { getProtoMessages } from '../../init/loadProtos.js';
-import firstConnectionCheckHandler from '../../handlers/user/firstConnectionCheck.handler.js';
+import initialHandler from '../../handlers/user/initial.handler.js';
 
 export const onData = (socket) => async (data) => {
   // 기존 버퍼에 새로 수신된 데이터를 추가
@@ -41,13 +41,14 @@ export const onData = (socket) => async (data) => {
             user.handlePong(pingMessage);
             break;
           }
-          case PACKET_TYPE.FIRST_CONNECTION: {
+          case PACKET_TYPE.INITIAL_USER: {
             const protoMessages = getProtoMessages();
-            const temp = protoMessages.main.FirstConnectionCheck;
+            const temp = protoMessages.main.InitialPacket;
             console.log(temp.decode(packet));
             
-            //firstConnectionCheckHandler
-            firstConnectionCheckHandler(socket);
+            // 서버의 발송
+            initialHandler(socket, temp.decode(packet));
+            
             
             break;
           }

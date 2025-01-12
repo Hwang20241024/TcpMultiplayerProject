@@ -45,8 +45,7 @@ export default class UserManager {
     // 키값은 별다른 검색없이 소캣만가지고 할 수 있게끔 구현.
     const userKey = `user:${key}`;
     await RedisManager.getInstance().createData(userKey, info);
-    const test = await RedisManager.getInstance().getDataByPrefix('user');
-    console.log(test);
+    //const test = await RedisManager.getInstance().getDataByPrefix('user');
   }
 
   // 소켓 삭제.
@@ -65,7 +64,23 @@ export default class UserManager {
     console.log(test);
   }
 
+  // 시퀀스
+  async getNextSequence(socket) {
+    const key = `${socket.remoteAddress}:${socket.remotePort}`;
+    const userKey = `user:${key}`;
+
+    let sequence = await RedisManager.getInstance().getData(userKey, 'sequence');
+    
+    if(sequence !== null) {
+      await RedisManager.getInstance().updateData(userKey, 'sequence', sequence + 1 );
+      return sequence + 1;
+    }
+
+    return 0;
+  }
+
   // 로직추가~ 
+  
 
 }
 

@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package title;
-
-// 최초 패킷 구조
-message TitlePacket {
-  string deviceId = 1;
-}

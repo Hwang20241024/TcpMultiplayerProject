@@ -1,16 +1,14 @@
-import initialHandler from './user/initial.handler.js';
-import firstConnectionCheckHandler from './user/firstConnectionCheck.handler.js';
 import { HANDLER_IDS } from '../constants/handlerIds.js';
+import { ErrorCodes } from '../utils/error/errorCodes.js'
+import CustomError from '../utils/error/customError.js'
+import initialUserHandler from './mainHub/initialUser.handler.js';
+
 
 const handlers = {
-  [HANDLER_IDS.INITIAL]: {
-    handler: initialHandler,
-    protoType: 'main.InitialPacket',
-  },
-  [HANDLER_IDS.FIRST_CONNECTION_CHECK]: {
-    handler: firstConnectionCheckHandler,
-    protoType: 'main.FirstConnectionCheck',
-  },
+  [HANDLER_IDS.INITIAL_USER]: {
+    handler: initialUserHandler,
+    protoType: 'mainHub.ResponseInitialUserPacket',
+  }
   // 다른 핸들러들을 추가
 };
 

@@ -1,0 +1,187 @@
+syntax = "proto3";
+
+package mainHub;
+
+/*====[데이터]====*/
+
+// 1. userData
+message UserData {
+  string uuid = 1;
+  string userId = 2;
+  string socketId = 3;
+  uint32 socketPort = 4;
+  uint32 sequence = 5;
+  bool isGame = 6;
+  uint32 score = 7;
+  uint32 bestScore = 8;
+  string roomId = 9;
+  float x = 10;
+  float y = 11;
+}
+
+// 2. connectedUser
+message ConnectedUser {
+  string deviceId = 1;
+  uint32 score = 2;
+}
+message ConnectedUsersData {
+  repeated ConnectedUser users = 1;
+}
+// 3. room
+message Participant {
+  string deviceId = 1;
+  bool isReady = 2;
+}
+message Room {
+  string roomId = 1;
+  string maxUserCount = 2;
+  uint32 connectedUserCount = 3;
+  bool isGame = 4;
+  repeated Participant Participants = 5;
+
+}
+message RoomsData {
+  repeated Room rooms = 1;
+}
+/*================*/
+
+/*====[타이틀]====*/
+
+//// 클라이언트 패킷 (클라이언트 -> 서버) 
+// 1. 유저 생성 패킷 메세지
+message InitialUserPacket {
+  string deviceId = 1;      // 유저 이름
+}
+
+//// 서버 패킷 (서버 -> 클라이언트)
+// 1. 유저 생성 응답 패킷 메세지
+message ResponseInitialUserPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  bytes userData = 4;       // 유저 데이터
+  uint32 sequence = 5;      // 시퀀스 값
+}
+/*================*/
+
+/*====[ 로비 ]====*/
+
+//// 클라이언트 패킷 (클라이언트 -> 서버) 
+// 1. 방 생성 패킷 메세지
+message InitialRoomPacket {
+  bytes roomData = 1;      // room 데이터
+  string deviceId = 2;     // 유저 이름
+  uint32 sequence = 3;     // 시퀀스 값
+}
+
+// 2. 방 입장 패킷 메세지
+message RoomJoinPacket {
+  bytes roomData = 1;      // room 데이터
+  string deviceId = 2;     // 유저 이름
+  uint32 sequence = 3;     // 시퀀스 값
+}
+
+// 3. 로비 채팅 패킷 메세지
+message LobbyChatPacket {
+  string deviceId = 1;      // 유저 이름
+  string chatData = 2;      // 채팅 데이터
+}
+
+//// 서버 패킷 (서버 -> 클라이언트)
+// 1. 방 입장 패킷 메세지 
+message ResponseRoomJoinPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  bool isRoomJoin = 4;      // 방 참여 여부
+  uint32 sequence = 5;      // 시퀀스 값
+}
+
+// 2. 방 정보 패킷 메세지 (브로드 캐스트)
+message ResponseRoomInfoPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  bytes roomsData = 4;      // 실제 응답 데이터 (rooms 데이터)
+  uint32 sequence = 5;      // 시퀀스 값
+}
+
+// 3. 접속 유저 패킷 메세지 (브로드 캐스트)
+message ResponseConnectedUserPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  bytes connectedUsersData = 4;      // 실제 응답 데이터 (rooms 데이터)
+  uint32 sequence = 5;      // 시퀀스 값
+}
+
+// 4. 로비 채팅 패킷 메세지 (브로드 캐스트)
+message ResponseLobbyChatPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  string deviceId = 4;      // 유저 이름
+  string chatData = 5;      // 채팅 데이터
+}
+/*================*/
+
+/*====[ Room ]====*/
+//// 클라이언트 패킷 (클라이언트 -> 서버)
+// 1. Room 준비 패킷 메세지 
+message RoomReadyPacket {
+  string deviceId = 1;      // 유저 이름
+  uint32 sequence = 2;      // 시퀀스 값
+}
+
+// 2. Room 준비 취소 패킷 메세지
+message RoomUnreadyPacket  {
+  string deviceId = 1;      // 유저 이름
+  uint32 sequence = 2;      // 시퀀스 값
+}
+
+// 3. Room 채팅 패킷 메세지
+message RoomChatPacket {
+  string deviceId = 1;      // 유저 이름
+  string chatData = 2;      // 채팅 데이터
+}
+
+// 4. Room 퇴장 래킷 메세지
+message RoomExitPacket {
+  string deviceId = 1;      // 유저 이름
+  uint32 sequence = 2;      // 시퀀스 값
+}
+
+//// 서버 패킷 (서버 -> 클라이언트)
+// 1. Room 상태 정보 패킷 메세지 (브로드 캐스트)
+message ResponseRoomStatusPacket  {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  bytes roomsData = 4;      // rooms 데이터
+  uint32 sequence = 5;      // 시퀀스 값
+}
+
+// 2. Room 게임시작 가능 여부 패킷 메세지 (브로드 캐스트)
+message ResponseRoomStartAckPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  bool isGame = 4;          // 게임 가능여부
+  uint32 sequence = 5;      // 시퀀스 값
+}
+
+// 3. Room 채팅 패킷 메세지 (브로드 캐스트)
+message ResponseRoomChatPacket {
+  uint32 handlerId = 1;     // 핸들러 ID
+  uint32 responseCode = 2;  // 응답 코드 (성공: 0, 실패: 에러 코드)
+  int64 timestamp = 3;      // 메시지 생성 타임스탬프 (Unix 타임스탬프)
+  string deviceId = 4;      // 유저 이름
+  string chatData = 5;      // 채팅 데이터
+}
+
+//// 서버-클라이언트 공통 패킷
+// 1. 룸의 Ping 패킷 메시지
+message RoomPing {
+  int64 timestamp = 1;       // Ping 타임스탬프
+}
+/*================*/

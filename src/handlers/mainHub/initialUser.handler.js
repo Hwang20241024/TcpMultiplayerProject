@@ -3,12 +3,12 @@ import { createResponse } from '../../utils/response/createResponse.js';
 import { handleError } from '../../utils/error/errorHandler.js';
 import { createUser, findUserByDeviceID, updateUserLogin } from '../../db/mysql/user/user.db.js';
 import UserManager from '../../classes/managers/user.manager.js';
-// 디비추가해야함
+import RedisManager from '../../db/redis/redisManager.js';
 
-const initialHandler = async (socket, payload) => {
+const initialUserHandler = async (socket, payload) => {
   try {
     const { deviceId } = payload;
-
+    // 접속할려는 유저를 DB에서 검색.
     let user = await findUserByDeviceID(deviceId);
     let message = '';
 
@@ -23,19 +23,23 @@ const initialHandler = async (socket, payload) => {
       console.log(message);
     }
 
-    
+    // 유저매니저에 추가.
+    await UserManager.getInstance().addSocket(socket, user.id, deviceId);
 
-    // 유저 정보 응답 생성
+    // 데이터
+    const key = `user:${socket.remoteAddress}:${socket.remotePort}`;
+    const data = await RedisManager.getInstance().getAllData(key);
+
+    // 클라이언트에 전송할 패킷 생성.
     const initialResponse = createResponse(
-      HANDLER_IDS.INITIAL,
+      socket,
+      HANDLER_IDS.INITIAL_USER,
       RESPONSE_SUCCESS_CODE,
-      { message: message },
+      data,
       deviceId,
     );
 
-    // 유저매니저에 추가.
-    UserManager.getInstance().addSocket(socket, user.id, deviceId);
-    
+
     // 소켓을 통해 클라이언트에게 응답 메시지 전송
     socket.write(initialResponse);
   } catch (error) {
@@ -43,4 +47,4 @@ const initialHandler = async (socket, payload) => {
   }
 };
 
-export default initialHandler;
+export default initialUserHandler;

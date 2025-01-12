@@ -17,3 +17,7 @@ export const createUser = async (deviceId) => {
 export const updateUserLogin = async (id) => {
   await pools.USER_DB.query(SQL_QUERIES.UPDATE_USER_LOGIN, [id]);
 };
+
+export const updateHighScore = async (id, highScore) => {
+  await pools.USER_DB.query(SQL_QUERIES.UPDATE_HIGH_SCORE, [highScore, id]);
+};

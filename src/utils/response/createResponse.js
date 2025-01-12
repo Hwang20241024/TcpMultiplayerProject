@@ -1,21 +1,40 @@
 import { getProtoMessages } from '../../init/loadProtos.js';
-import { getNextSequence } from '../../session/user.session.js';
 import { config } from '../../config/config.js';
 import { PACKET_TYPE } from '../../constants/header.js';
+import { HANDLER_IDS } from '../../constants/handlerIds.js';
+import UserManager from '../../classes/managers/user.manager.js';
 
-export const createResponse = (handlerId, responseCode, data = null, userId) => {
+export const createResponse = (socket, handlerId, responseCode, data = null) => {
+  // 프로토 생성
   const protoMessages = getProtoMessages();
-  const Response = protoMessages.response.Response;
+  let response = protoMessages.mainHub.ResponseInitialUserPacket;
+  let responseData = null;
+  let bufferData = null;
+  let dataKey = '';
+
+  switch (handlerId) {
+    case HANDLER_IDS.INITIAL_USER:
+      response = protoMessages.mainHub.ResponseInitialUserPacket;
+      responseData = protoMessages.mainHub.UserData;
+      bufferData = responseData.encode(data).finish();
+      dataKey = 'userData';
+      break;
+    case 1: // 계속추가 
+      break;
+
+    default:
+      break;
+  }
 
   const responsePayload = {
-    handlerId,
-    responseCode,
+    handlerId: handlerId,
+    responseCode: responseCode,
     timestamp: Date.now(),
-    data: data ? Buffer.from(JSON.stringify(data)) : null,
-    sequence: userId ? getNextSequence(userId) : 0,
+    [dataKey]: bufferData, // 데이터는 동적으로 설정.
+    sequence: UserManager.getInstance().getNextSequence(socket),
   };
 
-  const buffer = Response.encode(responsePayload).finish();
+  const buffer = response.encode(responsePayload).finish();
 
   // 패킷 길이 정보를 포함한 버퍼 생성
   const packetLength = Buffer.alloc(config.packet.totalLength);

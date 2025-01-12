@@ -140,7 +140,11 @@ class RedisManager {
           parsedResult[field] = result[field];
         }
       }
-      return parsedResult;
+      // 키를 제외하고 값만 포함한 새로운 객체 생성
+      return Object.keys(parsedResult).reduce((obj, field) => {
+        obj[field] = parsedResult[field];
+        return obj;
+      }, {});
     } catch (error) {
       console.error('전체 데이터 조회 실패:', error);
       throw error;

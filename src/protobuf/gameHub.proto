@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package gameHub;
+
+// Ping 패킷 메시지
+message Ping {
+    int64 timestamp = 1;       // Ping 타임스탬프
+}
+  

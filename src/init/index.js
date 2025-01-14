@@ -4,6 +4,7 @@ import pools from '../db/mysql/mysql.database.js';
 import { loadProtos } from './loadProtos.js';
 import  RedisManager  from '../db/redis/redisManager.js'
 import UserManager from '../classes/managers/user.manager.js';
+import RoomManager from '../classes/managers/room.manager.js';
 
 const initServer = async () => {
   try {
@@ -14,8 +15,9 @@ const initServer = async () => {
     await RedisManager.getInstance().deleteAllData();
     await RedisManager.getInstance().getAllDataFromAllKeys();
     
-    // 유저 매니저 초기화.
+    // 매니저 초기화
     UserManager.getInstance();
+    RoomManager.getInstance();
 
     // 다음 작업
   } catch (e) {

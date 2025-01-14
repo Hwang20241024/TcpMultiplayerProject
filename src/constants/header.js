@@ -4,7 +4,10 @@ export const PACKET_TYPE_LENGTH = 1; // 패킷타입을 나타내는 1바이트 
 export const PACKET_TYPE = {
   PING: 0,
   INITIAL_USER:1,
-  GAME_START: 2,
-  LOCATION: 3,
-  NORMAL: 4,
+  CONNECTED_USERS:2,
+  LOBBY_CHAT: 3,
+  CREATE_ROOM: 4,
+  GAME_START: 5,
+  LOCATION: 6,
+  NORMAL: 7,
 };

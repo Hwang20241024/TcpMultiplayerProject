@@ -23,22 +23,29 @@ const initialUserHandler = async (socket, payload) => {
       console.log(message);
     }
 
-    // 유저매니저에 추가.
-    await UserManager.getInstance().addSocket(socket, user.id, deviceId);
-
     // 데이터
-    const key = `user:${socket.remoteAddress}:${socket.remotePort}`;
-    const data = await RedisManager.getInstance().getAllData(key);
+    let key = `user`;
+    let exists  = await RedisManager.getInstance().getDataByPrefixAndSearchTerm(key, deviceId);
+
+    let responseCode = 0;
+    if (!exists) {
+      console.log('성공');
+      responseCode = RESPONSE_SUCCESS_CODE.Success;
+
+      // 유저매니저에 추가. (나중에보자.)
+      await UserManager.getInstance().addSocket(socket, user, deviceId);
+      
+    } else {
+      console.log('실패');
+      responseCode = RESPONSE_SUCCESS_CODE.Failure;
+    }
+
+    // 데이터를 읽어오자 
+    key = `user:${socket.remoteAddress}:${socket.remotePort}`;
+    const data = await RedisManager.getInstance().getAllData(key); 
 
     // 클라이언트에 전송할 패킷 생성.
-    const initialResponse = createResponse(
-      socket,
-      HANDLER_IDS.INITIAL_USER,
-      RESPONSE_SUCCESS_CODE,
-      data,
-      deviceId,
-    );
-
+    const initialResponse = createResponse(socket, HANDLER_IDS.INITIAL_USER, responseCode, data);
 
     // 소켓을 통해 클라이언트에게 응답 메시지 전송
     socket.write(initialResponse);

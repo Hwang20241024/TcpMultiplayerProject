@@ -21,21 +21,21 @@ export default class UserManager {
   }
 
   // 소켓 추가.
-  async addSocket(socket, userId, deviceId) {
+  async addSocket(socket, user, deviceId) {
     // 현재 연결된 소켓추가
     const key = `${socket.remoteAddress}:${socket.remotePort}`;
     this.connectedSockets[key] = socket;
 
     // 유저 정보 세팅.
     let info = {
-      uuid: userId,
+      uuid: user.id,
       userId: deviceId,
       socketId: socket.remoteAddress,
       socketPort: socket.remotePort,
       sequence: 0,
       isGame: false,
       score: 0,
-      bestScore: 0,
+      bestScore: user.high_score,
       roomId:"",
       x: 0,
       y: 0,
@@ -77,6 +77,10 @@ export default class UserManager {
     }
 
     return 0;
+  }
+
+  getConnectedSockets() {
+    return this.connectedSockets;
   }
 
   // 로직추가~ 

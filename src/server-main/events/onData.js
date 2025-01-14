@@ -6,6 +6,7 @@ import { ErrorCodes } from '../../utils/error/errorCodes.js';
 import { handleError } from '../../utils/error/errorHandler.js';
 import { getProtoMessages } from '../../init/loadProtos.js';
 import { HANDLER_IDS } from '../../constants/handlerIds.js';
+import UserManager from '../../classes/managers/user.manager.js';
 
 export const onData = (socket) => async (data) => {
   // 기존 버퍼에 새로 수신된 데이터를 추가
@@ -25,8 +26,9 @@ export const onData = (socket) => async (data) => {
       // 패킷 데이터를 자르고 버퍼에서 제거
       const packet = socket.buffer.slice(totalHeaderLength, length);
       socket.buffer = socket.buffer.slice(length);
-
       
+      console.log(packetType);
+
       try {
         switch (packetType) {
           case PACKET_TYPE.PING: {
@@ -44,18 +46,59 @@ export const onData = (socket) => async (data) => {
             const protoMessages = getProtoMessages();
             const temp = protoMessages.mainHub.InitialUserPacket;
             console.log(temp.decode(packet));
-            
-            // 서버의 발송
+
+            // 서버의 발송 (유저 생성)
             const handler = getHandlerById(HANDLER_IDS.INITIAL_USER);
             await handler(socket, temp.decode(packet));
+
+           
+
+            // 현재 접속중인유저
+            const users = await UserManager.getInstance().getConnectedSockets();
+            const connectedUserHandler = getHandlerById(HANDLER_IDS.CONNECTED_USERS);
+
+            // 모든 소켓에 비동기적으로 메시지를 보내기
+            await Promise.all(
+              Object.values(users).map(async (element) => {
+                await connectedUserHandler(element);
+              }),
+            );
             break;
           }
+          case PACKET_TYPE.LOBBY_CHAT: {
+            const protoMessages = getProtoMessages();
+            const temp = protoMessages.mainHub.LobbyChatPacket;
 
-          
+            // 현재 접속중인유저
+            const users = await UserManager.getInstance().getConnectedSockets();
+            const lobbyChatHandler = getHandlerById(HANDLER_IDS.LOBBY_CHAT);
+
+            // 모든 소켓에 비동기적으로 메시지를 보내기
+            await Promise.all(
+              Object.values(users).map(async (element) => {
+                await lobbyChatHandler(element, temp.decode(packet));
+              }),
+            );
+            break;
+          }
+          case PACKET_TYPE.CREATE_ROOM: {
+            // 방생성 작성.
+            const users = await UserManager.getInstance().getConnectedSockets();
+            const roomInfoHandler = getHandlerById(HANDLER_IDS.CREATE_ROOM);
+
+            //console.log(users);
+
+            // 모든 소켓에 비동기적으로 메시지를 보내기
+            await Promise.all(
+              Object.values(users).map(async (element) => {
+                
+                await roomInfoHandler(element);
+              }),
+            );
+            
+            break;
+          }
         }
-
-        
-
       } catch (error) {
         handleError(socket, error);
       }
@@ -72,11 +115,10 @@ export const onData = (socket) => async (data) => {
 
 // 만들고 확인하고 나누자.
 
-// 공부, 경험.필수도전 완료후 해보자. 
-
+// 공부, 경험.필수도전 완료후 해보자.
 
 // 1. 추가기능
 // 2. 동기화 최적화
 // 3. 분산서버.
 
-// 
+//

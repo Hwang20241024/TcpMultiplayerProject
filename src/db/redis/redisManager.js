@@ -88,18 +88,22 @@ class RedisManager {
   }
 
   // 데이터 조회 (HGET)
-  async getData(key, field) {
-    try {
-      const result = await this.redis.hget(key, field);
-      if (result) {
-        return JSON.parse(result);
+async getData(key, field) {
+  try {
+    const result = await this.redis.hget(key, field);
+    if (result) {
+      try {
+        return JSON.parse(result);  // JSON 형식이 맞으면 파싱
+      } catch (error) {
+        return result;  // JSON 형식이 아니면 그냥 반환
       }
-      return null;
-    } catch (error) {
-      console.error('데이터 조회 실패:', error);
-      throw error;
     }
+    return null;
+  } catch (error) {
+    console.error('데이터 조회 실패:', error);
+    throw error;
   }
+}
 
   // 데이터 업데이트 (HSET)
   async updateData(key, field, value) {
@@ -180,6 +184,44 @@ class RedisManager {
       return resultData;
     } catch (error) {
       console.error('접두어로 데이터 조회 실패:', error);
+      throw error;
+    }
+  }
+
+  // 접두어와 검색어를 기반으로 데이터 조회 후 존재 여부 반환
+  async getDataByPrefixAndSearchTerm(prefix, searchTerm) {
+    try {
+      // 접두어에 해당하는 모든 key들을 가져오기 위해 keys 사용
+      const keys = await this.redis.keys(`${prefix}:*`); // 해당 접두어로 시작하는 모든 키를 찾기
+
+      // 각 key에 대해서 데이터 조회
+      for (const key of keys) {
+        const data = await this.redis.hgetall(key); // 해당 key의 모든 데이터를 가져옴
+        if (data) {
+          // 각 필드에서 검색어가 포함된 경우를 찾기
+          for (const field in data) {
+            if (data.hasOwnProperty(field)) {
+              // 데이터가 JSON 형태면 파싱
+              let parsedValue;
+              try {
+                parsedValue = JSON.parse(data[field]); // JSON 문자열을 객체로 변환
+              } catch (error) {
+                parsedValue = data[field]; // 파싱 실패하면 원본 데이터 그대로 저장
+              }
+
+              // 검색어가 포함된 필드를 찾으면 true 반환
+              if (parsedValue?.toString().includes(searchTerm)) {
+                return true; // 검색어가 포함된 데이터가 발견되면 즉시 true 반환
+              }
+            }
+          }
+        }
+      }
+
+      // 검색어에 맞는 데이터가 없으면 false 반환
+      return false;
+    } catch (error) {
+      console.error('접두어와 검색어로 데이터 조회 실패:', error);
       throw error;
     }
   }

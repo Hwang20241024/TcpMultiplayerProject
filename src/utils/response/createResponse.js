@@ -4,35 +4,98 @@ import { PACKET_TYPE } from '../../constants/header.js';
 import { HANDLER_IDS } from '../../constants/handlerIds.js';
 import UserManager from '../../classes/managers/user.manager.js';
 
-export const createResponse = (socket, handlerId, responseCode, data = null) => {
+export const createResponse =  (socket, handlerId, responseCode, data = null) => {
   // 프로토 생성
   const protoMessages = getProtoMessages();
   let response = protoMessages.mainHub.ResponseInitialUserPacket;
   let responseData = null;
   let bufferData = null;
+  let bufferData2 = null;
   let dataKey = '';
+  let sequenceKey = null;
+  let PacketType = null;
 
   switch (handlerId) {
     case HANDLER_IDS.INITIAL_USER:
       response = protoMessages.mainHub.ResponseInitialUserPacket;
       responseData = protoMessages.mainHub.UserData;
       bufferData = responseData.encode(data).finish();
+      bufferData2 = UserManager.getInstance().getNextSequence(socket);
       dataKey = 'userData';
+      sequenceKey = 'sequence';
+      PacketType = PACKET_TYPE.INITIAL_USER;
       break;
-    case 1: // 계속추가 
-      break;
+    case HANDLER_IDS.CONNECTED_USERS: {
+      response = protoMessages.mainHub.ResponseConnectedUserPacket;
+      responseData = protoMessages.mainHub.ConnectedUsersData;
 
+      const connectedUsersData = responseData.create();
+      data.forEach((user) => {
+        const connectedUser = protoMessages.mainHub.ConnectedUser.create({
+          deviceId: user.deviceId,
+          score: user.score,
+        });
+        connectedUsersData.users.push(connectedUser); // 'users' 배열에 추가
+      });
+
+      bufferData = responseData.encode(connectedUsersData).finish();
+      bufferData2 = UserManager.getInstance().getNextSequence(socket);
+      dataKey = 'connectedUsersData';
+      sequenceKey = 'sequence';
+      PacketType = PACKET_TYPE.CONNECTED_USERS;
+      break;
+    }
+    case HANDLER_IDS.LOBBY_CHAT:
+      response = protoMessages.mainHub.ResponseLobbyChatPacket;
+      bufferData = data.deviceId;
+      bufferData2 = data.chatData;
+      dataKey = 'deviceId';
+      sequenceKey = 'chatData';
+      PacketType = PACKET_TYPE.LOBBY_CHAT;
+
+      break;
+    case HANDLER_IDS.CREATE_ROOM: {
+      response = protoMessages.mainHub.ResponseRoomInfoPacket;
+      responseData = protoMessages.mainHub.RoomsData;
+
+      const roomsDatas = responseData.create();
+      data.forEach((roomInfo) => {
+        const room = protoMessages.mainHub.Room.create({
+          roomId: roomInfo.roomId,
+          roomName: roomInfo.roomName,
+          host: roomInfo.host,
+          currentPlayers: roomInfo.currentPlayers,
+          maxPlayers: roomInfo.maxPlayers,
+        });
+        roomsDatas.rooms.push(room); // 'users' 배열에 추가
+      });
+
+      bufferData = responseData.encode(roomsDatas).finish();     
+      bufferData2 = UserManager.getInstance().getNextSequence(socket);
+      dataKey = 'roomsData';
+      sequenceKey = 'sequence';
+      PacketType = PACKET_TYPE.CREATE_ROOM;
+
+      break;
+    }
     default:
       break;
   }
+
+  // 테스트
+// const temp = getProtoMessages();
+// const temp2 = temp.mainHub.UserData;
+// console.log(temp2.decode(bufferData));
 
   const responsePayload = {
     handlerId: handlerId,
     responseCode: responseCode,
     timestamp: Date.now(),
     [dataKey]: bufferData, // 데이터는 동적으로 설정.
-    sequence: UserManager.getInstance().getNextSequence(socket),
+    [sequenceKey]: bufferData2,
   };
+
+
 
   const buffer = response.encode(responsePayload).finish();
 
@@ -45,7 +108,7 @@ export const createResponse = (socket, handlerId, responseCode, data = null) => 
 
   // 패킷 타입 정보를 포함한 버퍼 생성
   const packetType = Buffer.alloc(config.packet.typeLength);
-  packetType.writeUInt8(PACKET_TYPE.NORMAL, 0);
+  packetType.writeUInt8(PacketType, 0);
 
   // 길이 정보와 메시지를 함께 전송
   return Buffer.concat([packetLength, packetType, buffer]);

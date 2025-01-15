@@ -48,6 +48,26 @@ export default class UserManager {
     //const test = await RedisManager.getInstance().getDataByPrefix('user');
   }
 
+  // updateIsGame
+  async updateIsGame(socket, data){
+    if (typeof data === 'boolean') {
+      const userKey = `user:${socket.remoteAddress}:${socket.remotePort}`;
+      await RedisManager.getInstance().updateData(userKey, 'isGame', data);
+    } else {
+      console.log("데이터타입이 boolean이 아닙니다.");
+    }
+  }
+
+  //
+  async updateRoomId(socket, data) {
+    if (typeof data === 'string') {
+      const userKey = `user:${socket.remoteAddress}:${socket.remotePort}`;
+      await RedisManager.getInstance().updateData(userKey, 'roomId', data);
+    } else {
+      console.log("데이터타입이 string가 아닙니다.");
+    }
+  }
+
   // 소켓 삭제.
   async removeSocket(socket) {
     const key = `${socket.remoteAddress}:${socket.remotePort}`;

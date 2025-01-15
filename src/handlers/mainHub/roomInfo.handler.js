@@ -4,12 +4,18 @@ import { handleError } from '../../utils/error/errorHandler.js';
 import RoomManager from '../../classes/managers/room.manager.js';
 import { v4 as uuidv4 } from 'uuid';
 
-const roomInfoHandler = async (socket) => {
+const roomInfoHandler = async (socket, update = false) => {
   try {
     // 룸 생성.
-    const roomId = uuidv4();
-    await RoomManager.getInstance().addRoom(socket, roomId);
+    if(!update){
+      const roomId = uuidv4();
+      await RoomManager.getInstance().addRoom(socket, roomId);
 
+      // 유저 업데이트 (방접속, 게임시작.)
+      await UserManager.getInstance().updateIsGame(socket, true);
+      await UserManager.getInstance().updateRoomId(socket, roomId);
+    }
+    
     // 룸 검증.
     // 레디스 매니저로 배열로 받자.
 

@@ -78,6 +78,16 @@ export const createResponse =  (socket, handlerId, responseCode, data = null) =>
 
       break;
     }
+    case HANDLER_IDS.START_ACK: {
+      response = protoMessages.mainHub.ResponseRoomStartAckPacket;
+      bufferData = data;
+      bufferData2 = UserManager.getInstance().getNextSequence(socket);
+      dataKey = 'isGame';
+      sequenceKey = 'sequence';
+      PacketType = PACKET_TYPE.START_ACK;
+
+      break;
+    }
     default:
       break;
   }

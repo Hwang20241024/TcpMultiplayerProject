@@ -7,6 +7,7 @@ import { handleError } from '../../utils/error/errorHandler.js';
 import { getProtoMessages } from '../../init/loadProtos.js';
 import { HANDLER_IDS } from '../../constants/handlerIds.js';
 import UserManager from '../../classes/managers/user.manager.js';
+import RoomManager from '../../classes/managers/room.manager.js';
 
 export const onData = (socket) => async (data) => {
   // 기존 버퍼에 새로 수신된 데이터를 추가
@@ -26,7 +27,7 @@ export const onData = (socket) => async (data) => {
       // 패킷 데이터를 자르고 버퍼에서 제거
       const packet = socket.buffer.slice(totalHeaderLength, length);
       socket.buffer = socket.buffer.slice(length);
-      
+
       console.log(packetType);
 
       try {
@@ -51,7 +52,11 @@ export const onData = (socket) => async (data) => {
             const handler = getHandlerById(HANDLER_IDS.INITIAL_USER);
             await handler(socket, temp.decode(packet));
 
-           
+
+            // 방목록도 갱신하자.
+            const roomInfoHandler = getHandlerById(HANDLER_IDS.CREATE_ROOM);
+            await roomInfoHandler(socket, true);
+
 
             // 현재 접속중인유저
             const users = await UserManager.getInstance().getConnectedSockets();
@@ -63,6 +68,7 @@ export const onData = (socket) => async (data) => {
                 await connectedUserHandler(element);
               }),
             );
+
             break;
           }
           case PACKET_TYPE.LOBBY_CHAT: {
@@ -86,17 +92,56 @@ export const onData = (socket) => async (data) => {
             const users = await UserManager.getInstance().getConnectedSockets();
             const roomInfoHandler = getHandlerById(HANDLER_IDS.CREATE_ROOM);
 
-            //console.log(users);
-
             // 모든 소켓에 비동기적으로 메시지를 보내기
             await Promise.all(
               Object.values(users).map(async (element) => {
-                
                 await roomInfoHandler(element);
               }),
             );
-            
+
+            const roomStartAckHandler = getHandlerById(HANDLER_IDS.START_ACK);
+            await roomStartAckHandler(socket, true);
+
             break;
+          }
+          case PACKET_TYPE.ROOM_JOIN: {
+            const protoMessages = getProtoMessages();
+            const temp = protoMessages.mainHub.RoomJoinPacket;
+            const roomId = temp.decode(packet).roomId;
+
+            const room = await RoomManager.getInstance().getRoom(roomId);
+
+            if (Object.keys(room).length !== 0) {
+              // 최대 접속자수가 넘었다면.
+              if (room.currentPlayers < room.maxPlayers) {
+                // 접속자를 추가합니다.
+                const userKey = `${socket.remoteAddress}:${socket.remotePort}`;
+                await RoomManager.getInstance().updateEntity(roomId, 'players', userKey);
+
+                const currentPlayers = room.currentPlayers;
+                await RoomManager.getInstance().updateCurrentPlayers(roomId, currentPlayers + 1);
+
+                // 방생성 작성.
+                const users = await UserManager.getInstance().getConnectedSockets();
+                const roomInfoHandler = getHandlerById(HANDLER_IDS.CREATE_ROOM);
+
+                // 모든 소켓에 비동기적으로 메시지를 보내기
+                await Promise.all(
+                  Object.values(users).map(async (element) => {
+                    await roomInfoHandler(element, true);
+                  }),
+                );
+              }
+
+              // 유저 업데이트 (방접속, 게임시작.)
+              await UserManager.getInstance().updateIsGame(socket, true);
+              await UserManager.getInstance().updateRoomId(socket, roomId);
+
+              const roomStartAckHandler = getHandlerById(HANDLER_IDS.START_ACK);
+              await roomStartAckHandler(socket, true);
+            }
+
+            // 게임 실행 메세지 ㄱㄱ
           }
         }
       } catch (error) {

@@ -2,8 +2,186 @@ syntax = "proto3";
 
 package gameHub;
 
+/*====[데이터]====*/
+message UserData {
+    string uuid = 1;
+    string userId = 2;
+    string socketId = 3;
+    uint32 socketPort = 4;
+    uint32 sequence = 5;
+    bool isGame = 6;
+    uint32 score = 7;
+    uint32 bestScore = 8;
+    string roomId = 9;
+    float x = 10;
+    float y = 11;
+}
+
+message UpdatePosition {
+    string roomId = 1;
+    EntityType entityType = 2;
+    string sourceId = 3;
+    float sourceX = 4;
+    float sourceY = 5;
+    
+    enum EntityType {
+        PLAYER = 0;  
+        MONSTER = 1; 
+        BULLET = 2;  
+    }
+}
+
+message UpdateAnimation {
+    string roomId = 1;
+    EntityType entityType = 2;
+    string sourceId = 3;
+    string animationState = 4;
+    
+    enum EntityType {
+        PLAYER = 0;  
+        MONSTER = 1; 
+        BULLET = 2;  
+    }
+}
+
+message InitialEntity {
+    string roomId = 1;
+    EntityType entityType = 2;
+    string sourceId = 3;
+    string animationState = 4;
+    float sourceX = 5;
+    float sourceY = 6;
+    
+    enum EntityType {
+        PLAYER = 0;  
+        MONSTER = 1; 
+        BULLET = 2;  
+    }
+}
+
+message DeleteEntity {
+    string roomId = 1;
+    EntityType entityType = 2;
+    string sourceId = 3;
+    
+    enum EntityType {
+        MONSTER = 0; 
+        BULLET = 1;  
+    }
+}
+
+message DeleteUser {
+    string roomId = 1;
+    string sourceId = 2;
+}
+/*================*/
+
+/*====[클라 -> 서버]====*/
 // Ping 패킷 메시지
 message Ping {
-    int64 timestamp = 1;       // Ping 타임스탬프
+    int64 timestamp = 1;      
 }
-  
+
+// 스폰 메시지
+message SpawnUserRequest{
+    string userId = 1;
+}
+
+// 키 Input  메시지
+message KeyInput {
+    string userId = 1;
+    string keyName = 2;
+    InputAction action = 3; 
+    int64 timestamp = 4;
+
+    enum InputAction {
+        DOWN = 0;
+        UP = 1;
+    }
+}
+
+// 애니메이션 메세지
+message AnimationState {
+    string userId = 1;
+    string animationState = 2;
+}
+
+// 게임 종료 메세지
+message GameExit {
+    string userId = 1;
+}
+
+// 충돌 
+message Collision  {
+    string roomId = 1;
+    string sourceId = 2;
+    string targetId = 3;
+    float sourceX = 4;
+    float sourceY = 5;
+    float targetX = 6;
+    float targetY = 7;
+    EntityType entityType = 8; 
+
+    enum EntityType {
+        PLAYER = 0;  
+        MONSTER = 1; 
+        BULLET = 2;  
+    }
+}
+/*======================*/
+
+/*====[서버 -> 클라]====*/
+// 게임 시작 패킷 메시지  (브로드 캐스트)
+message UserStartResponse {
+    uint32 handlerId = 1;     
+    uint32 responseCode = 2;  
+    int64 timestamp = 3;      
+    bytes userData = 4;     
+    uint32 sequence = 5;      
+}
+
+// 좌표 업데이트 패킷 메시지 (브로드 캐스트)
+message UpdatePositionResponse {
+    uint32 handlerId = 1;     
+    uint32 responseCode = 2;  
+    int64 timestamp = 3;      
+    bytes updatePosition = 4;     
+    uint32 sequence = 5;   
+}
+
+// 애니메이션 업데이트 메시지 (브로드 캐스트)
+message UpdateAnimationResponse {
+    uint32 handlerId = 1;     
+    uint32 responseCode = 2;  
+    int64 timestamp = 3;      
+    bytes updateAnimation = 4;     
+    uint32 sequence = 5;  
+}
+
+// 엔티티 생성 메시지 (브로드 캐스트)
+message InitialEntityResponse {
+    uint32 handlerId = 1;     
+    uint32 responseCode = 2;  
+    int64 timestamp = 3;      
+    bytes initialEntity = 4;     
+    uint32 sequence = 5;  
+}
+
+// 엔티티 삭제 메시지 (브로드 캐스트)
+message DeleteEntityResponse {
+    uint32 handlerId = 1;     
+    uint32 responseCode = 2;  
+    int64 timestamp = 3;      
+    bytes deleteEntity = 4;     
+    uint32 sequence = 5;  
+}
+
+// 유저 삭제 메시지 (브로드 캐스트)
+message DeleteUserResponse {
+    uint32 handlerId = 1;     
+    uint32 responseCode = 2;  
+    int64 timestamp = 3;      
+    bytes deleteUser = 4;     
+    uint32 sequence = 5;  
+}
+/*======================*/

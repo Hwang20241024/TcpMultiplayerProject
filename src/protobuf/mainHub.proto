@@ -71,7 +71,7 @@ message InitialRoomPacket {
 
 // 2. 방 입장 패킷 메세지
 message RoomJoinPacket {
-  bytes roomData = 1;      // room 데이터
+  string roomId = 1;      // room 데이터
   string deviceId = 2;     // 유저 이름
   uint32 sequence = 3;     // 시퀀스 값
 }

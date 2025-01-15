@@ -5,6 +5,7 @@ import initialUserHandler from './mainHub/initialUser.handler.js';
 import connectedUserHandler from './mainHub/connectedUser.handler.js';
 import lobbyChatPacketHandler from './mainHub/lobbyChatPacket.handler.js';
 import roomInfoHandler from './mainHub/roomInfo.handler.js';
+import roomStartAckHandler from './mainHub/roomStartAck.handler.js';
 
 
 const handlers = {
@@ -24,6 +25,10 @@ const handlers = {
     handler: roomInfoHandler,
     protoType: `mainHub.ResponseRoomInfoPacket`,
   },
+  [HANDLER_IDS.START_ACK]: {
+    handler: roomStartAckHandler,
+    protoType: `mainHub.ResponseRoomStartAckPacket`,
+  }
   // 다른 핸들러들을 추가
 };
 

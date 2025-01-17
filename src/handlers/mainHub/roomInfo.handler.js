@@ -3,6 +3,7 @@ import { createResponse } from '../../utils/response/createResponse.js';
 import { handleError } from '../../utils/error/errorHandler.js';
 import RoomManager from '../../classes/managers/room.manager.js';
 import { v4 as uuidv4 } from 'uuid';
+import UserManager from '../../classes/managers/user.manager.js';
 
 const roomInfoHandler = async (socket, update = false) => {
   try {

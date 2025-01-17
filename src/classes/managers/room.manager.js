@@ -1,4 +1,5 @@
 import RedisManager from '../../db/redis/redisManager.js';
+import updatePositionHandler from '../../handlers/gameHub/updatePosition.handler.js';
 
 const MAX_PLAYER = 4;
 
@@ -10,6 +11,7 @@ export default class RoomManager {
       throw new Error('RoomManager는 싱글턴 클래스입니다. getInstance()를 사용하세요.');
     }
     this.roomsId = [];
+    this.updateRoom = {};
     RoomManager.instance = this; // 인스턴스를 static 변수에 저장
   }
 
@@ -37,6 +39,7 @@ export default class RoomManager {
 
     const monsters = [];
     const bullets = [];
+    const latencys = {};
 
     // 방 정보 세팅.
     let roomInfo = {
@@ -46,13 +49,17 @@ export default class RoomManager {
       players: players,
       monsters: monsters,
       bullets: bullets,
+      latencys: latencys,
       currentPlayers: 1,
       maxPlayers: MAX_PLAYER,
     };
 
+    // 점프중인가 아닌가 판단하자. 
+
     // 방생성.
     await RedisManager.getInstance().createData(key, roomInfo);
     this.roomsId.push(key);
+
   }
 
   // 방 업데이트 (접속 중인 플레이어)
@@ -65,18 +72,14 @@ export default class RoomManager {
     }
   }
 
-  
-  // 방 엔티티 업데이트 (플레이어, 몬스터, 총알 등.. )
-  async updateEntity(roomId, type, data) {
+  // 방 엔티티 생성 (플레이어, 몬스터, 총알 등.. )
+  async InstantiationEntity(roomId, type, data) {
     const key = `room:${roomId}`;
     const entitys = await RedisManager.getInstance().getData(key, type);
-    
-    if(entitys.length !== 0) {
-      const index = entitys.indexOf(data);
-      if (index !== -1) {
-        entitys.push(data);
-        await RedisManager.getInstance().updateData(key, type, entitys);
-      }
+
+    if(!entitys.includes(data)){
+      entitys.push(data);  // 무조건 푸시
+      await RedisManager.getInstance().updateData(key, type, entitys);
     }
   }
 
@@ -92,6 +95,26 @@ export default class RoomManager {
       if (index !== -1) {
         await RedisManager.getInstance().updateData(key, type, entitys);
       }
+    }
+  }
+
+  // 레이턴시 생성
+  async InstantiationLatency (roomId, userKey, data) {
+    const roomkey = `room:${roomId}`;
+    const latencys = await RedisManager.getInstance().getData(roomkey, 'latencys');
+    
+    latencys[userKey] = data;
+    await RedisManager.getInstance().updateData(roomkey, 'latencys', latencys);
+  }
+  
+  // 레이턴시 삭제 
+  async  removeLatency(roomId, socket, data) {
+    const roomkey = `room:${roomId}`;
+    const userKey = `user:user:${socket.remoteAddress}:${socket.remotePort}`;
+    const latencys = await RedisManager.getInstance().getData(roomkey, 'latencys');
+
+    if(Object.keys(latencys).length !== 0) {
+      delete latencys[userKey];
     }
   }
 

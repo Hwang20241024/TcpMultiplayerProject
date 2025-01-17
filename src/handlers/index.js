@@ -6,7 +6,12 @@ import connectedUserHandler from './mainHub/connectedUser.handler.js';
 import lobbyChatPacketHandler from './mainHub/lobbyChatPacket.handler.js';
 import roomInfoHandler from './mainHub/roomInfo.handler.js';
 import roomStartAckHandler from './mainHub/roomStartAck.handler.js';
-
+import userStartHandler from './gameHub/userStart.handler.js'
+import updatePositionHandler from './gameHub/updatePosition.handler.js';
+import updateAnimationHandler from './gameHub/updateAnimation.handler.js';
+import initialEntityHandler from './gameHub/initialEntity.handler.js';
+import deleteEntityHandler from './gameHub/deleteEntity.handler.js';
+import deleteUserHandler from './gameHub/deleteUser.handler.js';
 
 const handlers = {
   [HANDLER_IDS.INITIAL_USER]: {
@@ -28,7 +33,31 @@ const handlers = {
   [HANDLER_IDS.START_ACK]: {
     handler: roomStartAckHandler,
     protoType: `mainHub.ResponseRoomStartAckPacket`,
-  }
+  },
+  [HANDLER_IDS.USER_START]: {
+    handler: userStartHandler,
+    protoType: `gameHub.UserStartResponse `,
+  },
+  [HANDLER_IDS.UPDATE_POSITION]: {
+    handler: updatePositionHandler,
+    protoType: `gameHub.UpdatePositionResponse `,
+  },
+  [HANDLER_IDS.UPDATE_ANIMATION]: {
+    handler: updateAnimationHandler,
+    protoType: `gameHub.UpdateAnimationResponse `,
+  },
+  [HANDLER_IDS.INITIAL_ENTITY]: {
+    handler: initialEntityHandler,
+    protoType: `gameHub.InitialEntityResponse `,
+  },
+  [HANDLER_IDS.DELETE_ENTITY]: {
+    handler: deleteEntityHandler,
+    protoType: `gameHub.DeleteEntityResponse `,
+  },
+  [HANDLER_IDS.DELETE_USER]: {
+    handler: deleteUserHandler,
+    protoType: `gameHub.DeleteUserResponse `,
+  },
   // 다른 핸들러들을 추가
 };
 

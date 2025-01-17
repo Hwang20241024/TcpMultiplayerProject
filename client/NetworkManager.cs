@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using UnityEngine;
 using Google.Protobuf;
 using MainHub;
+using GameHub;
 using Google.Protobuf.WellKnownTypes;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
@@ -13,6 +14,10 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
+using static NetworkManager;
+using static GameHub.KeyInput.Types;
+using TMPro;
+
 
 
 /*
@@ -46,17 +51,26 @@ public class NetworkManager : MonoBehaviour
     // 상수
     public enum PacketType
     {
-        PING = 0,
+        PING = 100,
         INITIAL_USER = 1,
         CONNECTED_USERS = 2,
         LOBBY_CHAT = 3,
         CREATE_ROOM = 4,
         ROOM_JOIN = 5,
         START_ACK = 6,
-        GAME_START = 55,
-        LOCATION = 56,
-        NORMAL = 57,
+        SPAWN_USER = 20,
+        KEY_INPUT = 21,
+        ANIMATION_STATE = 22,
+        COLLISION = 23,
+        GAME_EXIT = 24,
+        USER_START = 30,
+        UPDATE_POSITION = 31,
+        UPDATE_ANIMATION = 32,
+        INITIAL_ENTITY = 33,
+        DELETE_ENTITY = 34,
+        DELETE_USER = 35,
     }
+
 
     public bool IsConnected { get; private set; }
 
@@ -294,6 +308,175 @@ public class NetworkManager : MonoBehaviour
 
     }
 
+    // 핑퐁 PING
+    public async Task<bool> SendPingPacketAsync(long timestamp)
+    {
+        if (!IsConnected || stream == null) return false;
+
+        try
+        {
+            // 데이터 생성
+            var packet = new GameHub.Ping
+            {
+                Timestamp = timestamp,
+            };
+            Debug.Log(timestamp);
+
+            byte[] packetWithLength = CreateResponse(packet, (byte)PacketType.PING);
+            await stream.WriteAsync(packetWithLength, 0, packetWithLength.Length);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("패킷 전송 실패: " + e.Message);
+            return false;
+        }
+
+    }
+
+
+    // 스폰 유저 SPAWN_USER
+    public async Task<bool> SendSpawnUserPacketAsync(string userId)
+    {
+        if (!IsConnected || stream == null) return false;
+
+        try
+        {
+            // 데이터 생성
+            var packet = new GameHub.SpawnUserRequest
+            {
+                UserId = userId,
+            };
+
+            byte[] packetWithLength = CreateResponse(packet, (byte)PacketType.SPAWN_USER);
+            await stream.WriteAsync(packetWithLength, 0, packetWithLength.Length);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("패킷 전송 실패: " + e.Message);
+            return false;
+        }
+
+    }
+
+    // 키입력 감지 KeyInput
+    public async Task<bool> SendKeyInputPacketAsync(string userId, string keyName, InputAction action, long timestamp)
+    {
+        if (!IsConnected || stream == null) return false;
+
+        try
+        {
+            // 데이터 생성
+            var packet = new GameHub.KeyInput
+            {
+                UserId = userId,
+                KeyName = keyName,
+                Action = action,
+                Timestamp = timestamp,
+            };
+
+            byte[] packetWithLength = CreateResponse(packet, (byte)PacketType.KEY_INPUT);
+            await stream.WriteAsync(packetWithLength, 0, packetWithLength.Length);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("패킷 전송 실패: " + e.Message);
+            return false;
+        }
+
+    }
+
+    // 애니메이션 AnimationState
+    public async Task<bool> SendAnimationStatePacketAsync(string userId, string animationState)
+    {
+        if (!IsConnected || stream == null) return false;
+
+        try
+        {
+            // 데이터 생성
+            var packet = new GameHub.AnimationState
+            {
+                UserId = userId,
+                AnimationState_ = animationState,
+            };
+
+            byte[] packetWithLength = CreateResponse(packet, (byte)PacketType.ANIMATION_STATE);
+            await stream.WriteAsync(packetWithLength, 0, packetWithLength.Length);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("패킷 전송 실패: " + e.Message);
+            return false;
+        }
+
+    }
+
+    // 충돌 Collision
+    public async Task<bool> SendCollisionPacketAsync(string roomId, string sourceId, string targetId, float sourceX, float sourceY, float targetX, float targetY, EntityType entityType)
+    {
+        if (!IsConnected || stream == null) return false;
+
+        try
+        {
+            // 데이터 생성
+            var packet = new GameHub.Collision
+            {
+                RoomId = roomId,
+                SourceId = sourceId,
+                TargetId = targetId,
+                TargetX = targetX,
+                TargetY = targetY, 
+                SourceX = sourceX,
+                SourceY = sourceY,
+                EntityType = entityType,
+            };
+
+            byte[] packetWithLength = CreateResponse(packet, (byte)PacketType.ANIMATION_STATE);
+            await stream.WriteAsync(packetWithLength, 0, packetWithLength.Length);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("패킷 전송 실패: " + e.Message);
+            return false;
+        }
+
+    }
+
+    // 게임종료 GameExit
+    public async Task<bool> SendGameExitPacketAsync(string userId)
+    {
+        if (!IsConnected || stream == null) return false;
+
+        try
+        {
+            // 데이터 생성
+            var packet = new GameHub.GameExit
+            {
+                UserId = userId,
+            };
+
+            byte[] packetWithLength = CreateResponse(packet, (byte)PacketType.GAME_EXIT);
+            await stream.WriteAsync(packetWithLength, 0, packetWithLength.Length);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("패킷 전송 실패: " + e.Message);
+            return false;
+        }
+
+    }
+
 
 
     // Big-Endian 방식으로 UInt32 값을 버퍼에 쓰는 함수
@@ -349,7 +532,6 @@ public class NetworkManager : MonoBehaviour
                              //// 받은 데이터를 패킷에 맞게 역직렬화
                             var data = MainHub.ResponseInitialUserPacket.Parser.ParseFrom(receivedData);
                             var userData = MainHub.UserData.Parser.ParseFrom(data.UserData);
-                            Debug.Log("갑자기 안되네2");
                             if (data.ResponseCode == 0)
                             {
                                 GameObjectManager.Instance.AlertText("로그인 하셨습니다.");
@@ -421,6 +603,7 @@ public class NetworkManager : MonoBehaviour
 
                         default:
                             Console.WriteLine("Other");
+                            await ReceiveGamePacket((PacketType)packetType, receivedData);
                             break;
                     }
 
@@ -449,17 +632,99 @@ public class NetworkManager : MonoBehaviour
     }
 
 
-
-    
-
-
-    // 메세지를 받는 시점을 바꾸자. 
-    // 1. 로비로 진행한 순간에 해야함..
-
-
-    // Update is called once per frame
-    void Update()
+    public async Task ReceiveGamePacket(PacketType type, byte[] receivedData)
     {
-        
+        switch (type)
+        {
+            case PacketType.PING:
+                Debug.Log("PING");
+                var data = GameHub.Ping.Parser.ParseFrom(receivedData);
+                await SendPingPacketAsync(data.Timestamp);
+                break;
+            case PacketType.USER_START:
+                Debug.Log("USER_START");
+                //// 받은 데이터를 패킷에 맞게 역직렬화
+                var userStartResponse = GameHub.UserStartResponse.Parser.ParseFrom(receivedData);
+                var userData = MainHub.UserData.Parser.ParseFrom(userStartResponse.UserData);
+
+                // 본인인지 아닌지 확인.
+                string mainPlayerName = PlayerManager.Instance.MainPlayer.UserInfo.UserId;
+                if(mainPlayerName == userData.UserId)
+                {
+                    PlayerManager.Instance.MainPlayer.CreateAndAddPlayerPrefab(mainPlayerName);
+                }
+                else
+                {
+                    PlayerManager.Instance.CreateOtherPlayers(userData);
+                }
+
+                break;
+            case PacketType.UPDATE_POSITION:
+                Debug.Log("UPDATE_POSITION");
+
+                var updatePositionResponse = GameHub.UpdatePositionResponse.Parser.ParseFrom(receivedData);
+                var updatePosition = GameHub.UpdatePosition.Parser.ParseFrom(updatePositionResponse.UpdatePosition);
+
+                Debug.Log($"x : {updatePosition.SourceX}, y : {updatePosition.SourceY}");
+
+                // 플레이어 객체 찾기
+                GameObject player = PlayerManager.Instance.FindPlayerObject(updatePosition.SourceId);
+
+                if (player != null)
+                {
+                    EntityController controller = player.GetComponent<EntityController>();
+                    if (controller != null)
+                    {
+                        controller.UpdateTargetPosition(updatePosition.SourceX, updatePosition.SourceY);
+                    }
+                }
+
+
+                //if (player != null)
+                //{
+                //    Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+                //    Vector3 targetPosition = new Vector3(updatePosition.SourceX, updatePosition.SourceY, 0f);
+
+                //    if (rb != null)
+                //    {
+                //        // Rigidbody2D를 사용하여 부드럽게 이동
+                //        rb.MovePosition(Vector3.Lerp(rb.position, targetPosition, 5f * Time.deltaTime));
+                //    }
+                //    else
+                //    {
+                //        // Rigidbody2D가 없으면 직접 이동
+                //        player.transform.position = Vector3.Lerp(player.transform.position, targetPosition, 100f * Time.deltaTime);
+                //    }
+
+                //    // 블로킹 문제 다른데서 루프 돌자.
+                //}
+                break;
+            case PacketType.UPDATE_ANIMATION:
+                Debug.Log("UPDATE_ANIMATION");
+               
+
+                break;
+            case PacketType.INITIAL_ENTITY:
+                Debug.Log("INITIAL_ENTITY");
+               
+                break;
+
+            case PacketType.DELETE_ENTITY:
+                Debug.Log("DELETE_ENTITY");
+
+   
+                break;
+
+            case PacketType.DELETE_USER:
+                Debug.Log("DELETE_USER");
+
+
+                break;
+
+            default:
+                Console.WriteLine("Other");
+                break;
+        }
     }
+
 }

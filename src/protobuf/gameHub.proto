@@ -15,6 +15,15 @@ message UserData {
     string roomId = 9;
     float x = 10;
     float y = 11;
+    string inputKey = 12;
+    uint32 keyPressedTimestamp = 13;
+    bool isJump = 14;
+}
+
+enum EntityType {
+    PLAYER = 0;  
+    MONSTER = 1; 
+    BULLET = 2;  
 }
 
 message UpdatePosition {
@@ -23,12 +32,6 @@ message UpdatePosition {
     string sourceId = 3;
     float sourceX = 4;
     float sourceY = 5;
-    
-    enum EntityType {
-        PLAYER = 0;  
-        MONSTER = 1; 
-        BULLET = 2;  
-    }
 }
 
 message UpdateAnimation {
@@ -36,12 +39,6 @@ message UpdateAnimation {
     EntityType entityType = 2;
     string sourceId = 3;
     string animationState = 4;
-    
-    enum EntityType {
-        PLAYER = 0;  
-        MONSTER = 1; 
-        BULLET = 2;  
-    }
 }
 
 message InitialEntity {
@@ -51,23 +48,12 @@ message InitialEntity {
     string animationState = 4;
     float sourceX = 5;
     float sourceY = 6;
-    
-    enum EntityType {
-        PLAYER = 0;  
-        MONSTER = 1; 
-        BULLET = 2;  
-    }
 }
 
 message DeleteEntity {
     string roomId = 1;
     EntityType entityType = 2;
     string sourceId = 3;
-    
-    enum EntityType {
-        MONSTER = 0; 
-        BULLET = 1;  
-    }
 }
 
 message DeleteUser {
@@ -121,12 +107,6 @@ message Collision  {
     float targetX = 6;
     float targetY = 7;
     EntityType entityType = 8; 
-
-    enum EntityType {
-        PLAYER = 0;  
-        MONSTER = 1; 
-        BULLET = 2;  
-    }
 }
 /*======================*/
 

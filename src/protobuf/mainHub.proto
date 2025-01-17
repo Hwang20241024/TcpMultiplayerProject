@@ -17,6 +17,9 @@ message UserData {
   string roomId = 9;
   float x = 10;
   float y = 11;
+  string inputKey = 12;
+  uint32 keyPressedTimestamp = 13;
+  bool isJump = 14;
 }
 
 // 2. connectedUser

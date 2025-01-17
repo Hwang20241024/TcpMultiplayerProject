@@ -39,11 +39,16 @@ export const loadProtos = async () => {
     // 비동기 병렬 처리로 프로토 파일 로드
     await Promise.all(protoFiles.map((file) => root.load(file)));
 
-    // packetNames 에 정의된 패킷들을 등록
+    // packetNames에 정의된 패킷들을 등록
     for (const [namespace, types] of Object.entries(packetNames)) {
       protoMessages[namespace] = {};
       for (const [type, typeName] of Object.entries(types)) {
-        protoMessages[namespace][type] = root.lookupType(typeName);
+        const typeDefinition = root.lookup(typeName);
+        if (!typeDefinition) {
+          console.error(`Type not found: ${typeName}`);
+          continue;
+        }
+        protoMessages[namespace][type] = typeDefinition;
       }
     }
 

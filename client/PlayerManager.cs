@@ -47,6 +47,51 @@ public class PlayerManager : MonoBehaviour
         OtherPlayers = new List<Player>();
     }
 
+    // 본인 스폰 요청.
+    public async void SpawnMainPlayer()
+    {
+        string userId = $"user:{MainPlayer.UserInfo.SocketId}:{MainPlayer.UserInfo.SocketPort}";
+        await NetworkManager.Instance.SendSpawnUserPacketAsync(userId);
+    }
+
+    // 다른 플레이어 추가 .
+    public void CreateOtherPlayers(MainHub.UserData userData)
+    {
+        // 새로 추가할 플레이어 객체 생성
+        Player otherPlayer = new Player(CreateUserInfo(userData), CreatePlayerStats(userData), CreatePlayerPosition(userData), userData.RoomId);
+
+        // 'UserInfo.Uuid' 기준으로 리스트에 동일한 플레이어가 있는지 확인
+        var existingPlayer = OtherPlayers.Find(p => p.UserInfo.Uuid == otherPlayer.UserInfo.Uuid);
+
+        if (existingPlayer == null)  // 리스트가 비어 있거나, 같은 Uuid를 가진 플레이어가 없는 경우
+        {
+            OtherPlayers.Add(otherPlayer);  // 새 플레이어 추가
+
+            var player = OtherPlayers.Find(p => p.UserInfo.Uuid == otherPlayer.UserInfo.Uuid);
+            player.CreateAndAddPlayerPrefab(player.UserInfo.UserId);
+        }
+    }
+
+    public GameObject FindPlayerObject(string uuid)
+    {
+        if (MainPlayer.UserInfo.Uuid == uuid)
+        {
+            GameObject targetObject = GameObject.Find(MainPlayer.UserInfo.UserId);
+            return targetObject;
+        }
+
+        var existingPlayer = OtherPlayers.Find(p => p.UserInfo.Uuid == uuid);
+
+        if (existingPlayer != null) // 리스트가 비어 있거나, 같은 Uuid를 가진 플레이어가 없는 경우
+        {
+            GameObject targetObject = GameObject.Find(existingPlayer.UserInfo.UserId);
+            return targetObject;
+        }
+
+        // 어떤 조건에도 해당하지 않을 경우
+        return null;
+    }
+
     public void RemoveAllPlayers()
     {
         // 메인 플레이어 삭제
@@ -83,6 +128,8 @@ public class PlayerManager : MonoBehaviour
             MainPlayer.Position = CreatePlayerPosition(userData);
             MainPlayer.RoomId = userData.RoomId;
 
+            GameManager.Instance.InitializeUserInfo();
+
             //Debug.Log(userData.UserId);
             //Debug.Log(MainPlayer.UserInfo.Uuid);
             //Debug.Log(MainPlayer.UserInfo.UserId);
@@ -108,7 +155,7 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerStats CreatePlayerStats(MainHub.UserData userData)
     {
-        return new PlayerStats(userData.Sequence, userData.IsGame, userData.Score, userData.BestScore);
+        return new PlayerStats(userData.Sequence, userData.IsGame, userData.Score, userData.BestScore, userData.InputKey, userData.KeyPressedTimestamp, userData.IsJump);
     }
 
     public PlayerPosition CreatePlayerPosition(MainHub.UserData userData)
@@ -136,6 +183,39 @@ public class Player : MonoBehaviour
         RoomId = roomId;
     }
 
+    public void CreateAndAddPlayerPrefab(string name)
+    {
+
+        // "Assets/Prefab/Player" 경로의 프리팹을 로드
+        GameObject playerPrefab = Resources.Load<GameObject>("Prefab/Player");
+
+        if (playerPrefab != null)
+        {
+            // 프리팹을 씬에 인스턴스화
+            GameObject playerObject = Object.Instantiate(playerPrefab);
+
+            // 이름 설정 (선택 사항)
+            playerObject.name = name;
+
+            // 추가 설정 가능 (예: 태그, 레이어 등)
+            // playerObject.tag = "Player";
+            // playerObject.layer = LayerMask.NameToLayer("PlayerLayer");
+
+            // 씬에 추가된 후의 추가 설정을 하려면 여기서부터
+        }
+        else
+        {
+            Debug.LogError("Player Prefab을 찾을 수 없습니다.");
+        }
+
+
+        // fff
+        // 특정 태그나 레이어 등을 설정할 수 있다
+        // emptyObject.tag = "PlayerSpawnPoint";
+        // emptyObject.layer = LayerMask.NameToLayer("UI");
+
+    }
+
 }
 
 
@@ -155,6 +235,7 @@ public class UserInfo
         SocketId = socketId;
         SocketPort = socketPort;
     }
+
 }
 
 public class PlayerStats
@@ -163,14 +244,21 @@ public class PlayerStats
     public bool IsGame { get; set; }
     public uint Score { get; set; }
     public uint BestScore { get; set; }
+    public string InputKey { get; set; }
+    public uint KeyPressedTimestamp { get; set; }
+    public bool IsJump { get; set; }
 
     // 생성자
-    public PlayerStats(uint sequence, bool isGame, uint score, uint bestScore)
+    public PlayerStats(uint sequence, bool isGame, uint score, uint bestScore, string inputKey, uint keyPressedTimestamp, bool isJump)
     {
         Sequence = sequence;
         IsGame = isGame;
         Score = score;
         BestScore = bestScore;
+        InputKey = inputKey;
+        KeyPressedTimestamp = keyPressedTimestamp;
+        IsJump = isJump;
+
     }
 }
 

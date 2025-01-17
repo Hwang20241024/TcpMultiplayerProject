@@ -24,41 +24,42 @@ namespace MainHub {
     static MainHubReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg1tYWluSHViLnByb3RvEgdtYWluSHViIrgBCghVc2VyRGF0YRIMCgR1dWlk",
+            "Cg1tYWluSHViLnByb3RvEgdtYWluSHViIvcBCghVc2VyRGF0YRIMCgR1dWlk",
             "GAEgASgJEg4KBnVzZXJJZBgCIAEoCRIQCghzb2NrZXRJZBgDIAEoCRISCgpz",
             "b2NrZXRQb3J0GAQgASgNEhAKCHNlcXVlbmNlGAUgASgNEg4KBmlzR2FtZRgG",
             "IAEoCBINCgVzY29yZRgHIAEoDRIRCgliZXN0U2NvcmUYCCABKA0SDgoGcm9v",
-            "bUlkGAkgASgJEgkKAXgYCiABKAISCQoBeRgLIAEoAiIwCg1Db25uZWN0ZWRV",
-            "c2VyEhAKCGRldmljZUlkGAEgASgJEg0KBXNjb3JlGAIgASgNIjsKEkNvbm5l",
-            "Y3RlZFVzZXJzRGF0YRIlCgV1c2VycxgBIAMoCzIWLm1haW5IdWIuQ29ubmVj",
-            "dGVkVXNlciJiCgRSb29tEg4KBnJvb21JZBgBIAEoCRIQCghyb29tTmFtZRgC",
-            "IAEoCRIMCgRob3N0GAMgASgJEhYKDmN1cnJlbnRQbGF5ZXJzGAQgASgNEhIK",
-            "Cm1heFBsYXllcnMYBSABKA0iKQoJUm9vbXNEYXRhEhwKBXJvb21zGAEgAygL",
-            "Mg0ubWFpbkh1Yi5Sb29tIiUKEUluaXRpYWxVc2VyUGFja2V0EhAKCGRldmlj",
-            "ZUlkGAEgASgJInsKGVJlc3BvbnNlSW5pdGlhbFVzZXJQYWNrZXQSEQoJaGFu",
-            "ZGxlcklkGAEgASgNEhQKDHJlc3BvbnNlQ29kZRgCIAEoDRIRCgl0aW1lc3Rh",
-            "bXAYAyABKAMSEAoIdXNlckRhdGEYBCABKAwSEAoIc2VxdWVuY2UYBSABKA0i",
-            "NwoRSW5pdGlhbFJvb21QYWNrZXQSEAoIZGV2aWNlSWQYASABKAkSEAoIc2Vx",
-            "dWVuY2UYAiABKA0iRAoOUm9vbUpvaW5QYWNrZXQSDgoGcm9vbUlkGAEgASgJ",
-            "EhAKCGRldmljZUlkGAIgASgJEhAKCHNlcXVlbmNlGAMgASgNIjUKD0xvYmJ5",
-            "Q2hhdFBhY2tldBIQCghkZXZpY2VJZBgBIAEoCRIQCghjaGF0RGF0YRgCIAEo",
-            "CSJ5ChZSZXNwb25zZVJvb21JbmZvUGFja2V0EhEKCWhhbmRsZXJJZBgBIAEo",
-            "DRIUCgxyZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0YW1wGAMgASgDEhEK",
-            "CXJvb21zRGF0YRgEIAEoDBIQCghzZXF1ZW5jZRgFIAEoDSKHAQobUmVzcG9u",
-            "c2VDb25uZWN0ZWRVc2VyUGFja2V0EhEKCWhhbmRsZXJJZBgBIAEoDRIUCgxy",
-            "ZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0YW1wGAMgASgDEhoKEmNvbm5l",
-            "Y3RlZFVzZXJzRGF0YRgEIAEoDBIQCghzZXF1ZW5jZRgFIAEoDSJ5ChdSZXNw",
-            "b25zZUxvYmJ5Q2hhdFBhY2tldBIRCgloYW5kbGVySWQYASABKA0SFAoMcmVz",
-            "cG9uc2VDb2RlGAIgASgNEhEKCXRpbWVzdGFtcBgDIAEoAxIQCghkZXZpY2VJ",
-            "ZBgEIAEoCRIQCghjaGF0RGF0YRgFIAEoCSJ6ChpSZXNwb25zZVJvb21TdGFy",
-            "dEFja1BhY2tldBIRCgloYW5kbGVySWQYASABKA0SFAoMcmVzcG9uc2VDb2Rl",
-            "GAIgASgNEhEKCXRpbWVzdGFtcBgDIAEoAxIOCgZpc0dhbWUYBCABKAgSEAoI",
-            "c2VxdWVuY2UYBSABKA0iHQoIUm9vbVBpbmcSEQoJdGltZXN0YW1wGAEgASgD",
-            "YgZwcm90bzM="));
+            "bUlkGAkgASgJEgkKAXgYCiABKAISCQoBeRgLIAEoAhIQCghpbnB1dEtleRgM",
+            "IAEoCRIbChNrZXlQcmVzc2VkVGltZXN0YW1wGA0gASgNEg4KBmlzSnVtcBgO",
+            "IAEoCCIwCg1Db25uZWN0ZWRVc2VyEhAKCGRldmljZUlkGAEgASgJEg0KBXNj",
+            "b3JlGAIgASgNIjsKEkNvbm5lY3RlZFVzZXJzRGF0YRIlCgV1c2VycxgBIAMo",
+            "CzIWLm1haW5IdWIuQ29ubmVjdGVkVXNlciJiCgRSb29tEg4KBnJvb21JZBgB",
+            "IAEoCRIQCghyb29tTmFtZRgCIAEoCRIMCgRob3N0GAMgASgJEhYKDmN1cnJl",
+            "bnRQbGF5ZXJzGAQgASgNEhIKCm1heFBsYXllcnMYBSABKA0iKQoJUm9vbXNE",
+            "YXRhEhwKBXJvb21zGAEgAygLMg0ubWFpbkh1Yi5Sb29tIiUKEUluaXRpYWxV",
+            "c2VyUGFja2V0EhAKCGRldmljZUlkGAEgASgJInsKGVJlc3BvbnNlSW5pdGlh",
+            "bFVzZXJQYWNrZXQSEQoJaGFuZGxlcklkGAEgASgNEhQKDHJlc3BvbnNlQ29k",
+            "ZRgCIAEoDRIRCgl0aW1lc3RhbXAYAyABKAMSEAoIdXNlckRhdGEYBCABKAwS",
+            "EAoIc2VxdWVuY2UYBSABKA0iNwoRSW5pdGlhbFJvb21QYWNrZXQSEAoIZGV2",
+            "aWNlSWQYASABKAkSEAoIc2VxdWVuY2UYAiABKA0iRAoOUm9vbUpvaW5QYWNr",
+            "ZXQSDgoGcm9vbUlkGAEgASgJEhAKCGRldmljZUlkGAIgASgJEhAKCHNlcXVl",
+            "bmNlGAMgASgNIjUKD0xvYmJ5Q2hhdFBhY2tldBIQCghkZXZpY2VJZBgBIAEo",
+            "CRIQCghjaGF0RGF0YRgCIAEoCSJ5ChZSZXNwb25zZVJvb21JbmZvUGFja2V0",
+            "EhEKCWhhbmRsZXJJZBgBIAEoDRIUCgxyZXNwb25zZUNvZGUYAiABKA0SEQoJ",
+            "dGltZXN0YW1wGAMgASgDEhEKCXJvb21zRGF0YRgEIAEoDBIQCghzZXF1ZW5j",
+            "ZRgFIAEoDSKHAQobUmVzcG9uc2VDb25uZWN0ZWRVc2VyUGFja2V0EhEKCWhh",
+            "bmRsZXJJZBgBIAEoDRIUCgxyZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0",
+            "YW1wGAMgASgDEhoKEmNvbm5lY3RlZFVzZXJzRGF0YRgEIAEoDBIQCghzZXF1",
+            "ZW5jZRgFIAEoDSJ5ChdSZXNwb25zZUxvYmJ5Q2hhdFBhY2tldBIRCgloYW5k",
+            "bGVySWQYASABKA0SFAoMcmVzcG9uc2VDb2RlGAIgASgNEhEKCXRpbWVzdGFt",
+            "cBgDIAEoAxIQCghkZXZpY2VJZBgEIAEoCRIQCghjaGF0RGF0YRgFIAEoCSJ6",
+            "ChpSZXNwb25zZVJvb21TdGFydEFja1BhY2tldBIRCgloYW5kbGVySWQYASAB",
+            "KA0SFAoMcmVzcG9uc2VDb2RlGAIgASgNEhEKCXRpbWVzdGFtcBgDIAEoAxIO",
+            "CgZpc0dhbWUYBCABKAgSEAoIc2VxdWVuY2UYBSABKA0iHQoIUm9vbVBpbmcS",
+            "EQoJdGltZXN0YW1wGAEgASgDYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::MainHub.UserData), global::MainHub.UserData.Parser, new[]{ "Uuid", "UserId", "SocketId", "SocketPort", "Sequence", "IsGame", "Score", "BestScore", "RoomId", "X", "Y" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::MainHub.UserData), global::MainHub.UserData.Parser, new[]{ "Uuid", "UserId", "SocketId", "SocketPort", "Sequence", "IsGame", "Score", "BestScore", "RoomId", "X", "Y", "InputKey", "KeyPressedTimestamp", "IsJump" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MainHub.ConnectedUser), global::MainHub.ConnectedUser.Parser, new[]{ "DeviceId", "Score" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MainHub.ConnectedUsersData), global::MainHub.ConnectedUsersData.Parser, new[]{ "Users" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::MainHub.Room), global::MainHub.Room.Parser, new[]{ "RoomId", "RoomName", "Host", "CurrentPlayers", "MaxPlayers" }, null, null, null, null),
@@ -128,6 +129,9 @@ namespace MainHub {
       roomId_ = other.roomId_;
       x_ = other.x_;
       y_ = other.y_;
+      inputKey_ = other.inputKey_;
+      keyPressedTimestamp_ = other.keyPressedTimestamp_;
+      isJump_ = other.isJump_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -269,6 +273,42 @@ namespace MainHub {
       }
     }
 
+    /// <summary>Field number for the "inputKey" field.</summary>
+    public const int InputKeyFieldNumber = 12;
+    private string inputKey_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string InputKey {
+      get { return inputKey_; }
+      set {
+        inputKey_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "keyPressedTimestamp" field.</summary>
+    public const int KeyPressedTimestampFieldNumber = 13;
+    private uint keyPressedTimestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint KeyPressedTimestamp {
+      get { return keyPressedTimestamp_; }
+      set {
+        keyPressedTimestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "isJump" field.</summary>
+    public const int IsJumpFieldNumber = 14;
+    private bool isJump_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsJump {
+      get { return isJump_; }
+      set {
+        isJump_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -295,6 +335,9 @@ namespace MainHub {
       if (RoomId != other.RoomId) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
+      if (InputKey != other.InputKey) return false;
+      if (KeyPressedTimestamp != other.KeyPressedTimestamp) return false;
+      if (IsJump != other.IsJump) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -313,6 +356,9 @@ namespace MainHub {
       if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
       if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
+      if (InputKey.Length != 0) hash ^= InputKey.GetHashCode();
+      if (KeyPressedTimestamp != 0) hash ^= KeyPressedTimestamp.GetHashCode();
+      if (IsJump != false) hash ^= IsJump.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -375,6 +421,18 @@ namespace MainHub {
         output.WriteRawTag(93);
         output.WriteFloat(Y);
       }
+      if (InputKey.Length != 0) {
+        output.WriteRawTag(98);
+        output.WriteString(InputKey);
+      }
+      if (KeyPressedTimestamp != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(KeyPressedTimestamp);
+      }
+      if (IsJump != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(IsJump);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -429,6 +487,18 @@ namespace MainHub {
         output.WriteRawTag(93);
         output.WriteFloat(Y);
       }
+      if (InputKey.Length != 0) {
+        output.WriteRawTag(98);
+        output.WriteString(InputKey);
+      }
+      if (KeyPressedTimestamp != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(KeyPressedTimestamp);
+      }
+      if (IsJump != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(IsJump);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -471,6 +541,15 @@ namespace MainHub {
       }
       if (Y != 0F) {
         size += 1 + 4;
+      }
+      if (InputKey.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(InputKey);
+      }
+      if (KeyPressedTimestamp != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(KeyPressedTimestamp);
+      }
+      if (IsJump != false) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -516,6 +595,15 @@ namespace MainHub {
       }
       if (other.Y != 0F) {
         Y = other.Y;
+      }
+      if (other.InputKey.Length != 0) {
+        InputKey = other.InputKey;
+      }
+      if (other.KeyPressedTimestamp != 0) {
+        KeyPressedTimestamp = other.KeyPressedTimestamp;
+      }
+      if (other.IsJump != false) {
+        IsJump = other.IsJump;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -580,6 +668,18 @@ namespace MainHub {
             Y = input.ReadFloat();
             break;
           }
+          case 98: {
+            InputKey = input.ReadString();
+            break;
+          }
+          case 104: {
+            KeyPressedTimestamp = input.ReadUInt32();
+            break;
+          }
+          case 112: {
+            IsJump = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -641,6 +741,18 @@ namespace MainHub {
           }
           case 93: {
             Y = input.ReadFloat();
+            break;
+          }
+          case 98: {
+            InputKey = input.ReadString();
+            break;
+          }
+          case 104: {
+            KeyPressedTimestamp = input.ReadUInt32();
+            break;
+          }
+          case 112: {
+            IsJump = input.ReadBool();
             break;
           }
         }

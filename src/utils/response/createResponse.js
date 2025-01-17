@@ -88,6 +88,26 @@ export const createResponse =  (socket, handlerId, responseCode, data = null) =>
 
       break;
     }
+    case HANDLER_IDS.USER_START: {
+      response = protoMessages.gameHub.UserStartResponse;
+      responseData = protoMessages.gameHub.UserData;
+      bufferData = responseData.encode(data).finish();
+      bufferData2 = UserManager.getInstance().getNextSequence(socket);
+      dataKey = 'userData';
+      sequenceKey = 'sequence';
+      PacketType = PACKET_TYPE.USER_START;
+      break;
+    }
+    case HANDLER_IDS.UPDATE_POSITION: {
+      response = protoMessages.gameHub.UpdatePositionResponse;
+      responseData = protoMessages.gameHub.UpdatePosition;
+      bufferData = responseData.encode(data).finish();
+      bufferData2 = UserManager.getInstance().getNextSequence(socket);
+      dataKey = 'updatePosition';
+      sequenceKey = 'sequence';
+      PacketType = PACKET_TYPE.UPDATE_POSITION;
+      break;
+    }
     default:
       break;
   }

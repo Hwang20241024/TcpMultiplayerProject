@@ -68,6 +68,10 @@ public class SceneFadeTransition : MonoBehaviour
 
         // 씬이 전환된 후 Canvas 및 Image 삭제
         Destroy(fadeCanvas.gameObject);  // Canvas와 그 자식 오브젝트들도 함께 삭제
+
+        // 메인 플레이어 스폰 요청.
+        PlayerManager.Instance.SpawnMainPlayer();
+        
     }
 
     // 코드로 fadeImage (Image) 생성 및 설정

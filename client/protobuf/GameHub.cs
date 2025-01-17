@@ -24,72 +24,68 @@ namespace GameHub {
     static GameHubReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg1nYW1lSHViLnByb3RvEgdnYW1lSHViIrgBCghVc2VyRGF0YRIMCgR1dWlk",
+            "Cg1nYW1lSHViLnByb3RvEgdnYW1lSHViIvcBCghVc2VyRGF0YRIMCgR1dWlk",
             "GAEgASgJEg4KBnVzZXJJZBgCIAEoCRIQCghzb2NrZXRJZBgDIAEoCRISCgpz",
             "b2NrZXRQb3J0GAQgASgNEhAKCHNlcXVlbmNlGAUgASgNEg4KBmlzR2FtZRgG",
             "IAEoCBINCgVzY29yZRgHIAEoDRIRCgliZXN0U2NvcmUYCCABKA0SDgoGcm9v",
-            "bUlkGAkgASgJEgkKAXgYCiABKAISCQoBeRgLIAEoAiK/AQoOVXBkYXRlUG9z",
-            "aXRpb24SDgoGcm9vbUlkGAEgASgJEjYKCmVudGl0eVR5cGUYAiABKA4yIi5n",
-            "YW1lSHViLlVwZGF0ZVBvc2l0aW9uLkVudGl0eVR5cGUSEAoIc291cmNlSWQY",
-            "AyABKAkSDwoHc291cmNlWBgEIAEoAhIPCgdzb3VyY2VZGAUgASgCIjEKCkVu",
-            "dGl0eVR5cGUSCgoGUExBWUVSEAASCwoHTU9OU1RFUhABEgoKBkJVTExFVBAC",
-            "IrcBCg9VcGRhdGVBbmltYXRpb24SDgoGcm9vbUlkGAEgASgJEjcKCmVudGl0",
-            "eVR5cGUYAiABKA4yIy5nYW1lSHViLlVwZGF0ZUFuaW1hdGlvbi5FbnRpdHlU",
-            "eXBlEhAKCHNvdXJjZUlkGAMgASgJEhYKDmFuaW1hdGlvblN0YXRlGAQgASgJ",
-            "IjEKCkVudGl0eVR5cGUSCgoGUExBWUVSEAASCwoHTU9OU1RFUhABEgoKBkJV",
-            "TExFVBACItUBCg1Jbml0aWFsRW50aXR5Eg4KBnJvb21JZBgBIAEoCRI1Cgpl",
-            "bnRpdHlUeXBlGAIgASgOMiEuZ2FtZUh1Yi5Jbml0aWFsRW50aXR5LkVudGl0",
-            "eVR5cGUSEAoIc291cmNlSWQYAyABKAkSFgoOYW5pbWF0aW9uU3RhdGUYBCAB",
-            "KAkSDwoHc291cmNlWBgFIAEoAhIPCgdzb3VyY2VZGAYgASgCIjEKCkVudGl0",
-            "eVR5cGUSCgoGUExBWUVSEAASCwoHTU9OU1RFUhABEgoKBkJVTExFVBACIo0B",
-            "CgxEZWxldGVFbnRpdHkSDgoGcm9vbUlkGAEgASgJEjQKCmVudGl0eVR5cGUY",
-            "AiABKA4yIC5nYW1lSHViLkRlbGV0ZUVudGl0eS5FbnRpdHlUeXBlEhAKCHNv",
-            "dXJjZUlkGAMgASgJIiUKCkVudGl0eVR5cGUSCwoHTU9OU1RFUhAAEgoKBkJV",
-            "TExFVBABIi4KCkRlbGV0ZVVzZXISDgoGcm9vbUlkGAEgASgJEhAKCHNvdXJj",
-            "ZUlkGAIgASgJIhkKBFBpbmcSEQoJdGltZXN0YW1wGAEgASgDIiIKEFNwYXdu",
-            "VXNlclJlcXVlc3QSDgoGdXNlcklkGAEgASgJIo4BCghLZXlJbnB1dBIOCgZ1",
-            "c2VySWQYASABKAkSDwoHa2V5TmFtZRgCIAEoCRItCgZhY3Rpb24YAyABKA4y",
-            "HS5nYW1lSHViLktleUlucHV0LklucHV0QWN0aW9uEhEKCXRpbWVzdGFtcBgE",
-            "IAEoAyIfCgtJbnB1dEFjdGlvbhIICgRET1dOEAASBgoCVVAQASI4Cg5Bbmlt",
-            "YXRpb25TdGF0ZRIOCgZ1c2VySWQYASABKAkSFgoOYW5pbWF0aW9uU3RhdGUY",
-            "AiABKAkiGgoIR2FtZUV4aXQSDgoGdXNlcklkGAEgASgJIukBCglDb2xsaXNp",
-            "b24SDgoGcm9vbUlkGAEgASgJEhAKCHNvdXJjZUlkGAIgASgJEhAKCHRhcmdl",
-            "dElkGAMgASgJEg8KB3NvdXJjZVgYBCABKAISDwoHc291cmNlWRgFIAEoAhIP",
-            "Cgd0YXJnZXRYGAYgASgCEg8KB3RhcmdldFkYByABKAISMQoKZW50aXR5VHlw",
-            "ZRgIIAEoDjIdLmdhbWVIdWIuQ29sbGlzaW9uLkVudGl0eVR5cGUiMQoKRW50",
-            "aXR5VHlwZRIKCgZQTEFZRVIQABILCgdNT05TVEVSEAESCgoGQlVMTEVUEAIi",
-            "cwoRVXNlclN0YXJ0UmVzcG9uc2USEQoJaGFuZGxlcklkGAEgASgNEhQKDHJl",
-            "c3BvbnNlQ29kZRgCIAEoDRIRCgl0aW1lc3RhbXAYAyABKAMSEAoIdXNlckRh",
-            "dGEYBCABKAwSEAoIc2VxdWVuY2UYBSABKA0ifgoWVXBkYXRlUG9zaXRpb25S",
-            "ZXNwb25zZRIRCgloYW5kbGVySWQYASABKA0SFAoMcmVzcG9uc2VDb2RlGAIg",
-            "ASgNEhEKCXRpbWVzdGFtcBgDIAEoAxIWCg51cGRhdGVQb3NpdGlvbhgEIAEo",
-            "DBIQCghzZXF1ZW5jZRgFIAEoDSKAAQoXVXBkYXRlQW5pbWF0aW9uUmVzcG9u",
-            "c2USEQoJaGFuZGxlcklkGAEgASgNEhQKDHJlc3BvbnNlQ29kZRgCIAEoDRIR",
-            "Cgl0aW1lc3RhbXAYAyABKAMSFwoPdXBkYXRlQW5pbWF0aW9uGAQgASgMEhAK",
-            "CHNlcXVlbmNlGAUgASgNInwKFUluaXRpYWxFbnRpdHlSZXNwb25zZRIRCglo",
-            "YW5kbGVySWQYASABKA0SFAoMcmVzcG9uc2VDb2RlGAIgASgNEhEKCXRpbWVz",
-            "dGFtcBgDIAEoAxIVCg1pbml0aWFsRW50aXR5GAQgASgMEhAKCHNlcXVlbmNl",
-            "GAUgASgNInoKFERlbGV0ZUVudGl0eVJlc3BvbnNlEhEKCWhhbmRsZXJJZBgB",
-            "IAEoDRIUCgxyZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0YW1wGAMgASgD",
-            "EhQKDGRlbGV0ZUVudGl0eRgEIAEoDBIQCghzZXF1ZW5jZRgFIAEoDSJ2ChJE",
-            "ZWxldGVVc2VyUmVzcG9uc2USEQoJaGFuZGxlcklkGAEgASgNEhQKDHJlc3Bv",
-            "bnNlQ29kZRgCIAEoDRIRCgl0aW1lc3RhbXAYAyABKAMSEgoKZGVsZXRlVXNl",
-            "chgEIAEoDBIQCghzZXF1ZW5jZRgFIAEoDWIGcHJvdG8z"));
+            "bUlkGAkgASgJEgkKAXgYCiABKAISCQoBeRgLIAEoAhIQCghpbnB1dEtleRgM",
+            "IAEoCRIbChNrZXlQcmVzc2VkVGltZXN0YW1wGA0gASgNEg4KBmlzSnVtcBgO",
+            "IAEoCCJ9Cg5VcGRhdGVQb3NpdGlvbhIOCgZyb29tSWQYASABKAkSJwoKZW50",
+            "aXR5VHlwZRgCIAEoDjITLmdhbWVIdWIuRW50aXR5VHlwZRIQCghzb3VyY2VJ",
+            "ZBgDIAEoCRIPCgdzb3VyY2VYGAQgASgCEg8KB3NvdXJjZVkYBSABKAIidAoP",
+            "VXBkYXRlQW5pbWF0aW9uEg4KBnJvb21JZBgBIAEoCRInCgplbnRpdHlUeXBl",
+            "GAIgASgOMhMuZ2FtZUh1Yi5FbnRpdHlUeXBlEhAKCHNvdXJjZUlkGAMgASgJ",
+            "EhYKDmFuaW1hdGlvblN0YXRlGAQgASgJIpQBCg1Jbml0aWFsRW50aXR5Eg4K",
+            "BnJvb21JZBgBIAEoCRInCgplbnRpdHlUeXBlGAIgASgOMhMuZ2FtZUh1Yi5F",
+            "bnRpdHlUeXBlEhAKCHNvdXJjZUlkGAMgASgJEhYKDmFuaW1hdGlvblN0YXRl",
+            "GAQgASgJEg8KB3NvdXJjZVgYBSABKAISDwoHc291cmNlWRgGIAEoAiJZCgxE",
+            "ZWxldGVFbnRpdHkSDgoGcm9vbUlkGAEgASgJEicKCmVudGl0eVR5cGUYAiAB",
+            "KA4yEy5nYW1lSHViLkVudGl0eVR5cGUSEAoIc291cmNlSWQYAyABKAkiLgoK",
+            "RGVsZXRlVXNlchIOCgZyb29tSWQYASABKAkSEAoIc291cmNlSWQYAiABKAki",
+            "GQoEUGluZxIRCgl0aW1lc3RhbXAYASABKAMiIgoQU3Bhd25Vc2VyUmVxdWVz",
+            "dBIOCgZ1c2VySWQYASABKAkijgEKCEtleUlucHV0Eg4KBnVzZXJJZBgBIAEo",
+            "CRIPCgdrZXlOYW1lGAIgASgJEi0KBmFjdGlvbhgDIAEoDjIdLmdhbWVIdWIu",
+            "S2V5SW5wdXQuSW5wdXRBY3Rpb24SEQoJdGltZXN0YW1wGAQgASgDIh8KC0lu",
+            "cHV0QWN0aW9uEggKBERPV04QABIGCgJVUBABIjgKDkFuaW1hdGlvblN0YXRl",
+            "Eg4KBnVzZXJJZBgBIAEoCRIWCg5hbmltYXRpb25TdGF0ZRgCIAEoCSIaCghH",
+            "YW1lRXhpdBIOCgZ1c2VySWQYASABKAkirAEKCUNvbGxpc2lvbhIOCgZyb29t",
+            "SWQYASABKAkSEAoIc291cmNlSWQYAiABKAkSEAoIdGFyZ2V0SWQYAyABKAkS",
+            "DwoHc291cmNlWBgEIAEoAhIPCgdzb3VyY2VZGAUgASgCEg8KB3RhcmdldFgY",
+            "BiABKAISDwoHdGFyZ2V0WRgHIAEoAhInCgplbnRpdHlUeXBlGAggASgOMhMu",
+            "Z2FtZUh1Yi5FbnRpdHlUeXBlInMKEVVzZXJTdGFydFJlc3BvbnNlEhEKCWhh",
+            "bmRsZXJJZBgBIAEoDRIUCgxyZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0",
+            "YW1wGAMgASgDEhAKCHVzZXJEYXRhGAQgASgMEhAKCHNlcXVlbmNlGAUgASgN",
+            "In4KFlVwZGF0ZVBvc2l0aW9uUmVzcG9uc2USEQoJaGFuZGxlcklkGAEgASgN",
+            "EhQKDHJlc3BvbnNlQ29kZRgCIAEoDRIRCgl0aW1lc3RhbXAYAyABKAMSFgoO",
+            "dXBkYXRlUG9zaXRpb24YBCABKAwSEAoIc2VxdWVuY2UYBSABKA0igAEKF1Vw",
+            "ZGF0ZUFuaW1hdGlvblJlc3BvbnNlEhEKCWhhbmRsZXJJZBgBIAEoDRIUCgxy",
+            "ZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0YW1wGAMgASgDEhcKD3VwZGF0",
+            "ZUFuaW1hdGlvbhgEIAEoDBIQCghzZXF1ZW5jZRgFIAEoDSJ8ChVJbml0aWFs",
+            "RW50aXR5UmVzcG9uc2USEQoJaGFuZGxlcklkGAEgASgNEhQKDHJlc3BvbnNl",
+            "Q29kZRgCIAEoDRIRCgl0aW1lc3RhbXAYAyABKAMSFQoNaW5pdGlhbEVudGl0",
+            "eRgEIAEoDBIQCghzZXF1ZW5jZRgFIAEoDSJ6ChREZWxldGVFbnRpdHlSZXNw",
+            "b25zZRIRCgloYW5kbGVySWQYASABKA0SFAoMcmVzcG9uc2VDb2RlGAIgASgN",
+            "EhEKCXRpbWVzdGFtcBgDIAEoAxIUCgxkZWxldGVFbnRpdHkYBCABKAwSEAoI",
+            "c2VxdWVuY2UYBSABKA0idgoSRGVsZXRlVXNlclJlc3BvbnNlEhEKCWhhbmRs",
+            "ZXJJZBgBIAEoDRIUCgxyZXNwb25zZUNvZGUYAiABKA0SEQoJdGltZXN0YW1w",
+            "GAMgASgDEhIKCmRlbGV0ZVVzZXIYBCABKAwSEAoIc2VxdWVuY2UYBSABKA0q",
+            "MQoKRW50aXR5VHlwZRIKCgZQTEFZRVIQABILCgdNT05TVEVSEAESCgoGQlVM",
+            "TEVUEAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UserData), global::GameHub.UserData.Parser, new[]{ "Uuid", "UserId", "SocketId", "SocketPort", "Sequence", "IsGame", "Score", "BestScore", "RoomId", "X", "Y" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UpdatePosition), global::GameHub.UpdatePosition.Parser, new[]{ "RoomId", "EntityType", "SourceId", "SourceX", "SourceY" }, null, new[]{ typeof(global::GameHub.UpdatePosition.Types.EntityType) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UpdateAnimation), global::GameHub.UpdateAnimation.Parser, new[]{ "RoomId", "EntityType", "SourceId", "AnimationState" }, null, new[]{ typeof(global::GameHub.UpdateAnimation.Types.EntityType) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.InitialEntity), global::GameHub.InitialEntity.Parser, new[]{ "RoomId", "EntityType", "SourceId", "AnimationState", "SourceX", "SourceY" }, null, new[]{ typeof(global::GameHub.InitialEntity.Types.EntityType) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.DeleteEntity), global::GameHub.DeleteEntity.Parser, new[]{ "RoomId", "EntityType", "SourceId" }, null, new[]{ typeof(global::GameHub.DeleteEntity.Types.EntityType) }, null, null),
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::GameHub.EntityType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UserData), global::GameHub.UserData.Parser, new[]{ "Uuid", "UserId", "SocketId", "SocketPort", "Sequence", "IsGame", "Score", "BestScore", "RoomId", "X", "Y", "InputKey", "KeyPressedTimestamp", "IsJump" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UpdatePosition), global::GameHub.UpdatePosition.Parser, new[]{ "RoomId", "EntityType", "SourceId", "SourceX", "SourceY" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UpdateAnimation), global::GameHub.UpdateAnimation.Parser, new[]{ "RoomId", "EntityType", "SourceId", "AnimationState" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.InitialEntity), global::GameHub.InitialEntity.Parser, new[]{ "RoomId", "EntityType", "SourceId", "AnimationState", "SourceX", "SourceY" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.DeleteEntity), global::GameHub.DeleteEntity.Parser, new[]{ "RoomId", "EntityType", "SourceId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.DeleteUser), global::GameHub.DeleteUser.Parser, new[]{ "RoomId", "SourceId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.Ping), global::GameHub.Ping.Parser, new[]{ "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.SpawnUserRequest), global::GameHub.SpawnUserRequest.Parser, new[]{ "UserId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.KeyInput), global::GameHub.KeyInput.Parser, new[]{ "UserId", "KeyName", "Action", "Timestamp" }, null, new[]{ typeof(global::GameHub.KeyInput.Types.InputAction) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.AnimationState), global::GameHub.AnimationState.Parser, new[]{ "UserId", "AnimationState_" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.GameExit), global::GameHub.GameExit.Parser, new[]{ "UserId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.Collision), global::GameHub.Collision.Parser, new[]{ "RoomId", "SourceId", "TargetId", "SourceX", "SourceY", "TargetX", "TargetY", "EntityType" }, null, new[]{ typeof(global::GameHub.Collision.Types.EntityType) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.Collision), global::GameHub.Collision.Parser, new[]{ "RoomId", "SourceId", "TargetId", "SourceX", "SourceY", "TargetX", "TargetY", "EntityType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UserStartResponse), global::GameHub.UserStartResponse.Parser, new[]{ "HandlerId", "ResponseCode", "Timestamp", "UserData", "Sequence" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UpdatePositionResponse), global::GameHub.UpdatePositionResponse.Parser, new[]{ "HandlerId", "ResponseCode", "Timestamp", "UpdatePosition", "Sequence" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameHub.UpdateAnimationResponse), global::GameHub.UpdateAnimationResponse.Parser, new[]{ "HandlerId", "ResponseCode", "Timestamp", "UpdateAnimation", "Sequence" }, null, null, null, null),
@@ -101,6 +97,15 @@ namespace GameHub {
     #endregion
 
   }
+  #region Enums
+  public enum EntityType {
+    [pbr::OriginalName("PLAYER")] Player = 0,
+    [pbr::OriginalName("MONSTER")] Monster = 1,
+    [pbr::OriginalName("BULLET")] Bullet = 2,
+  }
+
+  #endregion
+
   #region Messages
   /// <summary>
   ///====[데이터]====
@@ -151,6 +156,9 @@ namespace GameHub {
       roomId_ = other.roomId_;
       x_ = other.x_;
       y_ = other.y_;
+      inputKey_ = other.inputKey_;
+      keyPressedTimestamp_ = other.keyPressedTimestamp_;
+      isJump_ = other.isJump_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -292,6 +300,42 @@ namespace GameHub {
       }
     }
 
+    /// <summary>Field number for the "inputKey" field.</summary>
+    public const int InputKeyFieldNumber = 12;
+    private string inputKey_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string InputKey {
+      get { return inputKey_; }
+      set {
+        inputKey_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "keyPressedTimestamp" field.</summary>
+    public const int KeyPressedTimestampFieldNumber = 13;
+    private uint keyPressedTimestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint KeyPressedTimestamp {
+      get { return keyPressedTimestamp_; }
+      set {
+        keyPressedTimestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "isJump" field.</summary>
+    public const int IsJumpFieldNumber = 14;
+    private bool isJump_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsJump {
+      get { return isJump_; }
+      set {
+        isJump_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -318,6 +362,9 @@ namespace GameHub {
       if (RoomId != other.RoomId) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
+      if (InputKey != other.InputKey) return false;
+      if (KeyPressedTimestamp != other.KeyPressedTimestamp) return false;
+      if (IsJump != other.IsJump) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -336,6 +383,9 @@ namespace GameHub {
       if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
       if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
       if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
+      if (InputKey.Length != 0) hash ^= InputKey.GetHashCode();
+      if (KeyPressedTimestamp != 0) hash ^= KeyPressedTimestamp.GetHashCode();
+      if (IsJump != false) hash ^= IsJump.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -398,6 +448,18 @@ namespace GameHub {
         output.WriteRawTag(93);
         output.WriteFloat(Y);
       }
+      if (InputKey.Length != 0) {
+        output.WriteRawTag(98);
+        output.WriteString(InputKey);
+      }
+      if (KeyPressedTimestamp != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(KeyPressedTimestamp);
+      }
+      if (IsJump != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(IsJump);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -452,6 +514,18 @@ namespace GameHub {
         output.WriteRawTag(93);
         output.WriteFloat(Y);
       }
+      if (InputKey.Length != 0) {
+        output.WriteRawTag(98);
+        output.WriteString(InputKey);
+      }
+      if (KeyPressedTimestamp != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(KeyPressedTimestamp);
+      }
+      if (IsJump != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(IsJump);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -494,6 +568,15 @@ namespace GameHub {
       }
       if (Y != 0F) {
         size += 1 + 4;
+      }
+      if (InputKey.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(InputKey);
+      }
+      if (KeyPressedTimestamp != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(KeyPressedTimestamp);
+      }
+      if (IsJump != false) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -539,6 +622,15 @@ namespace GameHub {
       }
       if (other.Y != 0F) {
         Y = other.Y;
+      }
+      if (other.InputKey.Length != 0) {
+        InputKey = other.InputKey;
+      }
+      if (other.KeyPressedTimestamp != 0) {
+        KeyPressedTimestamp = other.KeyPressedTimestamp;
+      }
+      if (other.IsJump != false) {
+        IsJump = other.IsJump;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -603,6 +695,18 @@ namespace GameHub {
             Y = input.ReadFloat();
             break;
           }
+          case 98: {
+            InputKey = input.ReadString();
+            break;
+          }
+          case 104: {
+            KeyPressedTimestamp = input.ReadUInt32();
+            break;
+          }
+          case 112: {
+            IsJump = input.ReadBool();
+            break;
+          }
         }
       }
     #endif
@@ -664,6 +768,18 @@ namespace GameHub {
           }
           case 93: {
             Y = input.ReadFloat();
+            break;
+          }
+          case 98: {
+            InputKey = input.ReadString();
+            break;
+          }
+          case 104: {
+            KeyPressedTimestamp = input.ReadUInt32();
+            break;
+          }
+          case 112: {
+            IsJump = input.ReadBool();
             break;
           }
         }
@@ -736,10 +852,10 @@ namespace GameHub {
 
     /// <summary>Field number for the "entityType" field.</summary>
     public const int EntityTypeFieldNumber = 2;
-    private global::GameHub.UpdatePosition.Types.EntityType entityType_ = global::GameHub.UpdatePosition.Types.EntityType.Player;
+    private global::GameHub.EntityType entityType_ = global::GameHub.EntityType.Player;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::GameHub.UpdatePosition.Types.EntityType EntityType {
+    public global::GameHub.EntityType EntityType {
       get { return entityType_; }
       set {
         entityType_ = value;
@@ -810,7 +926,7 @@ namespace GameHub {
     public override int GetHashCode() {
       int hash = 1;
       if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
-      if (EntityType != global::GameHub.UpdatePosition.Types.EntityType.Player) hash ^= EntityType.GetHashCode();
+      if (EntityType != global::GameHub.EntityType.Player) hash ^= EntityType.GetHashCode();
       if (SourceId.Length != 0) hash ^= SourceId.GetHashCode();
       if (SourceX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(SourceX);
       if (SourceY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(SourceY);
@@ -836,7 +952,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.UpdatePosition.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -866,7 +982,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.UpdatePosition.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -895,7 +1011,7 @@ namespace GameHub {
       if (RoomId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomId);
       }
-      if (EntityType != global::GameHub.UpdatePosition.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EntityType);
       }
       if (SourceId.Length != 0) {
@@ -922,7 +1038,7 @@ namespace GameHub {
       if (other.RoomId.Length != 0) {
         RoomId = other.RoomId;
       }
-      if (other.EntityType != global::GameHub.UpdatePosition.Types.EntityType.Player) {
+      if (other.EntityType != global::GameHub.EntityType.Player) {
         EntityType = other.EntityType;
       }
       if (other.SourceId.Length != 0) {
@@ -958,7 +1074,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.UpdatePosition.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -997,7 +1113,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.UpdatePosition.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -1016,20 +1132,6 @@ namespace GameHub {
       }
     }
     #endif
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the UpdatePosition message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static partial class Types {
-      public enum EntityType {
-        [pbr::OriginalName("PLAYER")] Player = 0,
-        [pbr::OriginalName("MONSTER")] Monster = 1,
-        [pbr::OriginalName("BULLET")] Bullet = 2,
-      }
-
-    }
-    #endregion
 
   }
 
@@ -1095,10 +1197,10 @@ namespace GameHub {
 
     /// <summary>Field number for the "entityType" field.</summary>
     public const int EntityTypeFieldNumber = 2;
-    private global::GameHub.UpdateAnimation.Types.EntityType entityType_ = global::GameHub.UpdateAnimation.Types.EntityType.Player;
+    private global::GameHub.EntityType entityType_ = global::GameHub.EntityType.Player;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::GameHub.UpdateAnimation.Types.EntityType EntityType {
+    public global::GameHub.EntityType EntityType {
       get { return entityType_; }
       set {
         entityType_ = value;
@@ -1156,7 +1258,7 @@ namespace GameHub {
     public override int GetHashCode() {
       int hash = 1;
       if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
-      if (EntityType != global::GameHub.UpdateAnimation.Types.EntityType.Player) hash ^= EntityType.GetHashCode();
+      if (EntityType != global::GameHub.EntityType.Player) hash ^= EntityType.GetHashCode();
       if (SourceId.Length != 0) hash ^= SourceId.GetHashCode();
       if (AnimationState.Length != 0) hash ^= AnimationState.GetHashCode();
       if (_unknownFields != null) {
@@ -1181,7 +1283,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.UpdateAnimation.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -1207,7 +1309,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.UpdateAnimation.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -1232,7 +1334,7 @@ namespace GameHub {
       if (RoomId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomId);
       }
-      if (EntityType != global::GameHub.UpdateAnimation.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EntityType);
       }
       if (SourceId.Length != 0) {
@@ -1256,7 +1358,7 @@ namespace GameHub {
       if (other.RoomId.Length != 0) {
         RoomId = other.RoomId;
       }
-      if (other.EntityType != global::GameHub.UpdateAnimation.Types.EntityType.Player) {
+      if (other.EntityType != global::GameHub.EntityType.Player) {
         EntityType = other.EntityType;
       }
       if (other.SourceId.Length != 0) {
@@ -1289,7 +1391,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.UpdateAnimation.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -1324,7 +1426,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.UpdateAnimation.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -1339,20 +1441,6 @@ namespace GameHub {
       }
     }
     #endif
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the UpdateAnimation message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static partial class Types {
-      public enum EntityType {
-        [pbr::OriginalName("PLAYER")] Player = 0,
-        [pbr::OriginalName("MONSTER")] Monster = 1,
-        [pbr::OriginalName("BULLET")] Bullet = 2,
-      }
-
-    }
-    #endregion
 
   }
 
@@ -1420,10 +1508,10 @@ namespace GameHub {
 
     /// <summary>Field number for the "entityType" field.</summary>
     public const int EntityTypeFieldNumber = 2;
-    private global::GameHub.InitialEntity.Types.EntityType entityType_ = global::GameHub.InitialEntity.Types.EntityType.Player;
+    private global::GameHub.EntityType entityType_ = global::GameHub.EntityType.Player;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::GameHub.InitialEntity.Types.EntityType EntityType {
+    public global::GameHub.EntityType EntityType {
       get { return entityType_; }
       set {
         entityType_ = value;
@@ -1507,7 +1595,7 @@ namespace GameHub {
     public override int GetHashCode() {
       int hash = 1;
       if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
-      if (EntityType != global::GameHub.InitialEntity.Types.EntityType.Player) hash ^= EntityType.GetHashCode();
+      if (EntityType != global::GameHub.EntityType.Player) hash ^= EntityType.GetHashCode();
       if (SourceId.Length != 0) hash ^= SourceId.GetHashCode();
       if (AnimationState.Length != 0) hash ^= AnimationState.GetHashCode();
       if (SourceX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(SourceX);
@@ -1534,7 +1622,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.InitialEntity.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -1568,7 +1656,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.InitialEntity.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -1601,7 +1689,7 @@ namespace GameHub {
       if (RoomId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomId);
       }
-      if (EntityType != global::GameHub.InitialEntity.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EntityType);
       }
       if (SourceId.Length != 0) {
@@ -1631,7 +1719,7 @@ namespace GameHub {
       if (other.RoomId.Length != 0) {
         RoomId = other.RoomId;
       }
-      if (other.EntityType != global::GameHub.InitialEntity.Types.EntityType.Player) {
+      if (other.EntityType != global::GameHub.EntityType.Player) {
         EntityType = other.EntityType;
       }
       if (other.SourceId.Length != 0) {
@@ -1670,7 +1758,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.InitialEntity.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -1713,7 +1801,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.InitialEntity.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -1736,20 +1824,6 @@ namespace GameHub {
       }
     }
     #endif
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the InitialEntity message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static partial class Types {
-      public enum EntityType {
-        [pbr::OriginalName("PLAYER")] Player = 0,
-        [pbr::OriginalName("MONSTER")] Monster = 1,
-        [pbr::OriginalName("BULLET")] Bullet = 2,
-      }
-
-    }
-    #endregion
 
   }
 
@@ -1814,10 +1888,10 @@ namespace GameHub {
 
     /// <summary>Field number for the "entityType" field.</summary>
     public const int EntityTypeFieldNumber = 2;
-    private global::GameHub.DeleteEntity.Types.EntityType entityType_ = global::GameHub.DeleteEntity.Types.EntityType.Monster;
+    private global::GameHub.EntityType entityType_ = global::GameHub.EntityType.Player;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::GameHub.DeleteEntity.Types.EntityType EntityType {
+    public global::GameHub.EntityType EntityType {
       get { return entityType_; }
       set {
         entityType_ = value;
@@ -1862,7 +1936,7 @@ namespace GameHub {
     public override int GetHashCode() {
       int hash = 1;
       if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
-      if (EntityType != global::GameHub.DeleteEntity.Types.EntityType.Monster) hash ^= EntityType.GetHashCode();
+      if (EntityType != global::GameHub.EntityType.Player) hash ^= EntityType.GetHashCode();
       if (SourceId.Length != 0) hash ^= SourceId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1886,7 +1960,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.DeleteEntity.Types.EntityType.Monster) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -1908,7 +1982,7 @@ namespace GameHub {
         output.WriteRawTag(10);
         output.WriteString(RoomId);
       }
-      if (EntityType != global::GameHub.DeleteEntity.Types.EntityType.Monster) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(16);
         output.WriteEnum((int) EntityType);
       }
@@ -1929,7 +2003,7 @@ namespace GameHub {
       if (RoomId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomId);
       }
-      if (EntityType != global::GameHub.DeleteEntity.Types.EntityType.Monster) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EntityType);
       }
       if (SourceId.Length != 0) {
@@ -1950,7 +2024,7 @@ namespace GameHub {
       if (other.RoomId.Length != 0) {
         RoomId = other.RoomId;
       }
-      if (other.EntityType != global::GameHub.DeleteEntity.Types.EntityType.Monster) {
+      if (other.EntityType != global::GameHub.EntityType.Player) {
         EntityType = other.EntityType;
       }
       if (other.SourceId.Length != 0) {
@@ -1980,7 +2054,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.DeleteEntity.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -2011,7 +2085,7 @@ namespace GameHub {
             break;
           }
           case 16: {
-            EntityType = (global::GameHub.DeleteEntity.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
           case 26: {
@@ -2022,19 +2096,6 @@ namespace GameHub {
       }
     }
     #endif
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the DeleteEntity message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static partial class Types {
-      public enum EntityType {
-        [pbr::OriginalName("MONSTER")] Monster = 0,
-        [pbr::OriginalName("BULLET")] Bullet = 1,
-      }
-
-    }
-    #endregion
 
   }
 
@@ -3580,10 +3641,10 @@ namespace GameHub {
 
     /// <summary>Field number for the "entityType" field.</summary>
     public const int EntityTypeFieldNumber = 8;
-    private global::GameHub.Collision.Types.EntityType entityType_ = global::GameHub.Collision.Types.EntityType.Player;
+    private global::GameHub.EntityType entityType_ = global::GameHub.EntityType.Player;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::GameHub.Collision.Types.EntityType EntityType {
+    public global::GameHub.EntityType EntityType {
       get { return entityType_; }
       set {
         entityType_ = value;
@@ -3627,7 +3688,7 @@ namespace GameHub {
       if (SourceY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(SourceY);
       if (TargetX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(TargetX);
       if (TargetY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(TargetY);
-      if (EntityType != global::GameHub.Collision.Types.EntityType.Player) hash ^= EntityType.GetHashCode();
+      if (EntityType != global::GameHub.EntityType.Player) hash ^= EntityType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3674,7 +3735,7 @@ namespace GameHub {
         output.WriteRawTag(61);
         output.WriteFloat(TargetY);
       }
-      if (EntityType != global::GameHub.Collision.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(64);
         output.WriteEnum((int) EntityType);
       }
@@ -3716,7 +3777,7 @@ namespace GameHub {
         output.WriteRawTag(61);
         output.WriteFloat(TargetY);
       }
-      if (EntityType != global::GameHub.Collision.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         output.WriteRawTag(64);
         output.WriteEnum((int) EntityType);
       }
@@ -3751,7 +3812,7 @@ namespace GameHub {
       if (TargetY != 0F) {
         size += 1 + 4;
       }
-      if (EntityType != global::GameHub.Collision.Types.EntityType.Player) {
+      if (EntityType != global::GameHub.EntityType.Player) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EntityType);
       }
       if (_unknownFields != null) {
@@ -3787,7 +3848,7 @@ namespace GameHub {
       if (other.TargetY != 0F) {
         TargetY = other.TargetY;
       }
-      if (other.EntityType != global::GameHub.Collision.Types.EntityType.Player) {
+      if (other.EntityType != global::GameHub.EntityType.Player) {
         EntityType = other.EntityType;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -3838,7 +3899,7 @@ namespace GameHub {
             break;
           }
           case 64: {
-            EntityType = (global::GameHub.Collision.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
         }
@@ -3889,27 +3950,13 @@ namespace GameHub {
             break;
           }
           case 64: {
-            EntityType = (global::GameHub.Collision.Types.EntityType) input.ReadEnum();
+            EntityType = (global::GameHub.EntityType) input.ReadEnum();
             break;
           }
         }
       }
     }
     #endif
-
-    #region Nested types
-    /// <summary>Container for nested types declared in the Collision message type.</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static partial class Types {
-      public enum EntityType {
-        [pbr::OriginalName("PLAYER")] Player = 0,
-        [pbr::OriginalName("MONSTER")] Monster = 1,
-        [pbr::OriginalName("BULLET")] Bullet = 2,
-      }
-
-    }
-    #endregion
 
   }
 
